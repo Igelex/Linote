@@ -19,5 +19,17 @@
 
     <!-- Tab Title for the list of all words -->
     <string name="page_title_all">All</string>
+    <string name="add_your_new_word">Add your new word</string>
+
+    <!-- String-Array for Chose_language Spinner-->
+    <string name="chose_lang">Chose language</string>
+    <string name="details">Details</string>
+    <string name="examples">Examples</string>
+    <string-array name="chose_lang_spinner">
+        <item>@string/chose_lang</item>
+        <item>@string/page_title_eng</item>
+        <item>@string/page_title_ger</item>
+    </string-array>
+
 
 </resources>
