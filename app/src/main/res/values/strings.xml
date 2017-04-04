@@ -17,5 +17,7 @@
     <!-- Card Popup Menu Item: See on Abby Lingvo Live-->
     <string name="menu_item_see_on_abby">See on Abby Lingvo Live</string>
 
+    <!-- Tab Title for the list of all words -->
+    <string name="page_title_all">All</string>
 
 </resources>

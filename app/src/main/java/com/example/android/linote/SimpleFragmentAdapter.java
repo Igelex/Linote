@@ -11,7 +11,7 @@ import android.util.Log;
  */
 
 public class SimpleFragmentAdapter extends FragmentPagerAdapter {
-    private static final int COUNT = 2;
+    private static final int COUNT = 3;
     public Context mContext;
 
     public SimpleFragmentAdapter (Context context, FragmentManager fm){
@@ -28,9 +28,11 @@ public class SimpleFragmentAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return mContext.getString(R.string.page_title_eng);
+                return mContext.getString(R.string.page_title_all);
             case 1:
                 return mContext.getString(R.string.page_title_ger);
+            case 2:
+                return mContext.getString(R.string.page_title_eng);
             default:
                 return null;
         }
@@ -41,9 +43,11 @@ public class SimpleFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return  new EngWordListFragment();
+                return  new AllWordsFragment();
             case 1:
                 return new GerWordListFragment();
+            case 2:
+                return  new EngWordListFragment();
             default:
                 Log.e("GerWordListFragment", "Error, cant create Fragment");
                 return null;
