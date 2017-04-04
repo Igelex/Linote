@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Linote</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="add_new_word_activity_lable">Add new Word</string>
+    <!-- Add New Word Activity lable -->
+    <string name="add_new_word_activity_lable">Add new word</string>
 
     <!-- Title of the Page with English Words  -->
     <string name="page_title_eng">English</string>
@@ -10,8 +10,12 @@
     <!-- Title of the Page with German Words  -->
     <string name="page_title_ger">German</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Card Popup Menu Item: Search on Google-->
+    <string name="menu_item_sear_on_google">Search on Google</string>
+    <!-- Card Popup Menu Item: See on Wiki-->
+    <string name="menu_item_see_on_wiki">See on Wiki</string>
+    <!-- Card Popup Menu Item: See on Abby Lingvo Live-->
+    <string name="menu_item_see_on_abby">See on Abby Lingvo Live</string>
 
 
 </resources>
