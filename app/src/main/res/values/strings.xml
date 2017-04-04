@@ -31,5 +31,44 @@
         <item>@string/page_title_ger</item>
     </string-array>
 
+    <!-- Parts of Spech Strings for Spinner -->
+    <string name="chose_pos">Part of Speech</string>
+    <string name="noun">Noun</string>
+    <string name="pronoun">Pronoun</string>
+    <string name="verb">Verb</string>
+    <string name="adverb">Adverb</string>
+    <string name="adjective">Adjective</string>
+    <string name="conjunction">Conjunction</string>
+    <string name="preposition">Preposition</string>
+    <string name="interjection">Interjecton</string>
+    <string name="word">Word</string>
+    <string name="translation">Translation</string>
+    <string name="collocations">Collocations</string>
+    <string-array name="chose_pos_spinner">
+        <item>@string/chose_pos</item>
+        <item>@string/noun</item>
+        <item>@string/pronoun</item>
+        <item>@string/verb</item>
+        <item>@string/adverb</item>
+        <item>@string/adjective</item>
+        <item>@string/conjunction</item>
+        <item>@string/preposition</item>
+        <item>@string/interjection</item>
+    </string-array>
+
+    <!-- Articles Strings for Spinner -->
+    <string name="chose_article">Chose article</string>
+    <string name="der">Der</string>
+    <string name="die">Die</string>
+    <string name="das">Das</string>
+    <string name="description">Description</string>
+    <string-array name="chose_article_spinner">
+        <item>@string/chose_article</item>
+        <item>@string/der</item>
+        <item>@string/die</item>
+        <item>@string/das</item>
+    </string-array>
+
+
 
 </resources>
