@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Linote</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="add_new_word_activity_lable">Add new Word</string>
+
+    <!-- Title of the Page with English Words  -->
+    <string name="page_title_eng">English</string>
+
+    <!-- Title of the Page with German Words  -->
+    <string name="page_title_ger">German</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
