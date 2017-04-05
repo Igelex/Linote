@@ -62,6 +62,11 @@
     <string name="die">Die</string>
     <string name="das">Das</string>
     <string name="description">Description</string>
+    <string name="delete_dialog_msg">Delete Word?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_menu_item">Save</string>
+    <string name="delete_menu_item">Delete</string>
     <string-array name="chose_article_spinner">
         <item>@string/chose_article</item>
         <item>@string/der</item>

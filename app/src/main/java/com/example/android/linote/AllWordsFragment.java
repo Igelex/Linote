@@ -32,6 +32,10 @@ public class AllWordsFragment extends Fragment implements LoaderManager.LoaderCa
         View rootView = inflater.inflate(R.layout.word_list, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.words_list_view);
 
+        LinoteCursorAdapter adapter = new LinoteCursorAdapter(getContext(),null);
+        listView.setAdapter(adapter);
+
+
         return rootView;
     }
 
