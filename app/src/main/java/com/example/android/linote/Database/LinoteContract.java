@@ -65,5 +65,22 @@ public class LinoteContract {
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_URI_AUTHORITY + "/" + PATH_WORDS;
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_URI_AUTHORITY + "/" + PATH_WORDS;
+
+        /**
+         * Projections
+         */
+        public static final String [] PROJECTION = {_ID + COLUMN_NAME_WORD + COLUMN_NAME_TRANSLATION
+                                                + COLUMN_NAME_PARTOFSPEECH + COLUMN_NAME_ARTICLE};
+
+        /**
+         * Selections
+         */
+        public static final String SELECTION_GER_WORDS = COLUMN_NAME_LANGUAGE + " =?";
+        public static final String [] SELECTION_ARGS_GER_WORDS = {String.valueOf(LANGUAGE_GERMAN)};
+
+        public static final String SELECTION_ENG_WORDS = COLUMN_NAME_LANGUAGE + " =?";
+        public static final String [] SELECTION_ARGS_ENG_WORDS = {String.valueOf(LANGUAGE_ENGLISH)};
+
+
     }
 }
