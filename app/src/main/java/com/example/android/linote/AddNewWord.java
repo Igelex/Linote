@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.example.android.linote.Database.LinoteContract;
 
+import static com.example.android.linote.Database.LinoteContract.*;
+
 
 public class AddNewWord extends AppCompatActivity {
 
@@ -64,16 +66,16 @@ public class AddNewWord extends AppCompatActivity {
                 }
                 switch (position){
                     case 0:
-                        lang = LinoteContract.LinoteEntry.LANGUAGE_NO_LANGUAGE_SELECTED;
+                        lang = LinoteEntry.LANGUAGE_NO_LANGUAGE_SELECTED;
                         Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        lang = LinoteContract.LinoteEntry.LANGUAGE_ENGLISH;
+                        lang = LinoteEntry.LANGUAGE_ENGLISH;
                         Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
                         mArticleSpinner.setVisibility(View.GONE);
                         break;
                     case 2:
-                        lang = LinoteContract.LinoteEntry.LANGUAGE_GERMAN;
+                        lang = LinoteEntry.LANGUAGE_GERMAN;
                         Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
                         mArticleSpinner.setVisibility(View.VISIBLE);
                         break;
@@ -143,21 +145,20 @@ public class AddNewWord extends AppCompatActivity {
         String word = inputWord.getText().toString().trim();
 
         ContentValues values = new ContentValues();
-        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_LANGUAGE, lang);
-        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_WORD, word);
-        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION, inputTranslation.getText().toString().trim());
-        //values.put(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH, pos);
-        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE, article);
-        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_DESCRIPTION, inputDescription.getText().toString().trim());
-        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS, inputCollocations.getText().toString().trim());
-        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES, inputExamples.getText().toString().trim());
+        values.put(LinoteEntry.COLUMN_NAME_LANGUAGE, lang);
+        values.put(LinoteEntry.COLUMN_NAME_WORD, word);
+        values.put(LinoteEntry.COLUMN_NAME_TRANSLATION, inputTranslation.getText().toString().trim());
+        values.put(LinoteEntry.COLUMN_NAME_PARTOFSPEECH, pos);
+        values.put(LinoteEntry.COLUMN_NAME_ARTICLE, article);
+        values.put(LinoteEntry.COLUMN_NAME_DESCRIPTION, inputDescription.getText().toString().trim());
+        values.put(LinoteEntry.COLUMN_NAME_COLLOCATIONS, inputCollocations.getText().toString().trim());
+        values.put(LinoteEntry.COLUMN_NAME_EXAMPLES, inputExamples.getText().toString().trim());
 
-        Uri uriResult = getContentResolver().insert(LinoteContract.LinoteEntry.CONTENT_URI, values);
+        Uri uriResult = getContentResolver().insert(LinoteEntry.CONTENT_URI, values);
         if(uriResult != null){
             Snackbar.make(scroll, "Word was added with ID: " + ContentUris.parseId(uriResult), Snackbar.LENGTH_SHORT).show();
         }else{
-            //Snackbar.make(scroll, "Word was not added", Snackbar.LENGTH_SHORT).show();
-            Toast.makeText(this,"Not ADDED!!!!!", Toast.LENGTH_LONG).show();
+            Snackbar.make(scroll, "Word was not added", Snackbar.LENGTH_SHORT).show();
 
         }
 
@@ -179,31 +180,31 @@ public class AddNewWord extends AppCompatActivity {
                 }
                 switch (position){
                     case 0:
-                        pos = LinoteContract.LinoteEntry.POS_NO_POS_SELECTED;
+                        pos = LinoteEntry.POS_NO_POS_SELECTED;
                         break;
                     case 1:
-                        pos = LinoteContract.LinoteEntry.POS_NOUN;
+                        pos = LinoteEntry.POS_NOUN;
                         break;
                     case 2:
-                        pos = LinoteContract.LinoteEntry.POS_PRONOUN;
+                        pos = LinoteEntry.POS_PRONOUN;
                         break;
                     case 3:
-                        pos = LinoteContract.LinoteEntry.POS_VERB;
+                        pos = LinoteEntry.POS_VERB;
                         break;
                     case 4:
-                        pos = LinoteContract.LinoteEntry.POS_ADVERB;
+                        pos = LinoteEntry.POS_ADVERB;
                         break;
                     case 5:
-                        pos = LinoteContract.LinoteEntry.POS_ADJECTIVE;
+                        pos = LinoteEntry.POS_ADJECTIVE;
                         break;
                     case 6:
-                        pos = LinoteContract.LinoteEntry.POS_CONJUNCTIVE;
+                        pos = LinoteEntry.POS_CONJUNCTIVE;
                         break;
                     case 7:
-                        pos = LinoteContract.LinoteEntry.POS_PREPOSITION;
+                        pos = LinoteEntry.POS_PREPOSITION;
                         break;
                     case 8:
-                        pos = LinoteContract.LinoteEntry.POS_INTERJECTION;
+                        pos = LinoteEntry.POS_INTERJECTION;
                         break;
                 }
             }
@@ -231,16 +232,16 @@ public class AddNewWord extends AppCompatActivity {
                 }
                 switch (position){
                     case 0:
-                        article = LinoteContract.LinoteEntry.ARTICLE_NO_ARTICLE;
+                        article = LinoteEntry.ARTICLE_NO_ARTICLE;
                         break;
                     case 1:
-                        article = LinoteContract.LinoteEntry.ARTICLE_DER;
+                        article = LinoteEntry.ARTICLE_DER;
                         break;
                     case 2:
-                        pos = LinoteContract.LinoteEntry.ARTICLE_DIE;
+                        pos = LinoteEntry.ARTICLE_DIE;
                         break;
                     case 3:
-                        pos = LinoteContract.LinoteEntry.ARTICLE_DAS;
+                        pos = LinoteEntry.ARTICLE_DAS;
                         break;
                 }
             }

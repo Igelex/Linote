@@ -26,10 +26,9 @@ public class LinoteDbHelper extends SQLiteOpenHelper {
             + LinoteEntry.COLUMN_NAME_TRANSLATION + " TEXT NOT NULL, "
             + LinoteEntry.COLUMN_NAME_PARTOFSPEECH + " INTEGER NOT NULL, "
             + LinoteEntry.COLUMN_NAME_ARTICLE + " INTEGER DEFAULT 0, "
-            + LinoteEntry.COLUMN_NAME_DESCRIPTION + " TEXT), "
+            + LinoteEntry.COLUMN_NAME_DESCRIPTION + " TEXT, "
             + LinoteEntry.COLUMN_NAME_COLLOCATIONS + " TEXT, "
-            + LinoteEntry.COLUMN_NAME_EXAMPLES + " TEXT) "
-            + ");";
+            + LinoteEntry.COLUMN_NAME_EXAMPLES + " TEXT );";
 
     public LinoteDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

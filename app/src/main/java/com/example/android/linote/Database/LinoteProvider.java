@@ -24,8 +24,8 @@ public class LinoteProvider extends ContentProvider {
 
     public static final String LOG_TAG = LinoteProvider.class.getSimpleName();
     private LinoteDbHelper mDbHelper;
-    SQLiteDatabase database;
-    Cursor cursor;
+    private SQLiteDatabase database;
+    private Cursor cursor;
     private static final int WORDS = 100;
     private static final int WORD_ID = 101;
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -135,6 +135,7 @@ public class LinoteProvider extends ContentProvider {
         try {
             id = database.insert(LinoteEntry.TABLE_NAME, null, values);
             if (id == -1) {
+                Log.e(LOG_TAG, "Failed to insert row for " + uri);
                 return null;
             }
         } catch (SQLException e){

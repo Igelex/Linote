@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
  * Created by Pastuh on 05.04.2017.
  */
 
-public class LinoteContract {
+public final class LinoteContract {
     private LinoteContract() {}
 
 
