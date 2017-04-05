@@ -1,105 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/desc_add_new_word"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_your_new_word" />
-
-    <Spinner
-        android:id="@+id/chose_lang_spinner"
-        style="@style/spinners_style"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"/>
-
-    <EditText
-        android:id="@+id/input_word"
-        style="@style/inputs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/word"
-        android:inputType="text"
-        android:maxLines="1" />
-
-    <EditText
-        android:id="@+id/input_translation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:hint="@string/translation"
-        style="@style/inputs"
-        android:maxLines="5"/>
-
-    <TextView
-        android:id="@+id/desc_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/details"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="@style/inputs">
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/desc_add_new_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_your_new_word"
+            style="@style/section_text"/>
 
         <Spinner
-            android:id="@+id/spinner_partofspeech"
+            android:id="@+id/chose_lang_spinner"
             style="@style/spinners_style"
-            android:layout_marginEnd="16dp"/>
+            android:layout_width="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp" />
 
-        <Spinner
-            android:id="@+id/spinner_article"
-            style="@style/spinners_style"
-            android:layout_width="wrap_content" />
+        <EditText
+            android:id="@+id/input_word"
+            style="@style/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/word"
+            android:inputType="text"
+            android:maxLines="1" />
 
+        <EditText
+            android:id="@+id/input_translation"
+            style="@style/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/translation"
+            android:inputType="textMultiLine"
+            android:maxLines="5" />
+
+        <TextView
+            android:id="@+id/desc_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/details"
+            style="@style/section_text"/>
+
+        <LinearLayout
+            style="@style/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner_partofspeech"
+                style="@style/spinners_style"
+                android:layout_marginEnd="16dp" />
+
+            <Spinner
+                android:id="@+id/spinner_article"
+                style="@style/spinners_style"
+                android:layout_width="wrap_content" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/input_description"
+            style="@style/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/description"
+            android:inputType="textMultiLine"
+            android:maxLines="5" />
+
+        <TextView
+            android:id="@+id/desc_examples"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/examples"
+            style="@style/section_text"/>
+
+        <EditText
+            android:id="@+id/input_collocations"
+            style="@style/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/collocations"
+            android:inputType="textMultiLine"
+            android:maxLines="5" />
+
+        <EditText
+            android:id="@+id/input_examples"
+            style="@style/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/examples"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:layout_marginBottom="48dp"/>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/input_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        style="@style/inputs"
-        android:hint="@string/description"
-        android:maxLines="5"/>
-
-    <TextView
-        android:id="@+id/desc_examples"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/examples"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"/>
-
-    <EditText
-        android:id="@+id/input_collocations"
-        style="@style/inputs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/collocations"
-        android:inputType="textMultiLine"
-        android:maxLines="5"/>
-
-    <EditText
-        android:id="@+id/input_examples"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:hint="@string/examples"
-        style="@style/inputs"
-        android:maxLines="5"/>
-
-</LinearLayout>
+</ScrollView>
