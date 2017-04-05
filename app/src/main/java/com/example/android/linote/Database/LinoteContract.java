@@ -19,7 +19,7 @@ public class LinoteContract {
         public static final String COLUMN_NAME_LANGUAGE = "language";
         public static final String COLUMN_NAME_WORD = "word";
         public static final String COLUMN_NAME_TRANSLATION = "translation";
-        public static final String COLUMN_NAME_PARTOFSPEECH = "part of speech";
+        public static final String COLUMN_NAME_PARTOFSPEECH = "part_of_speech";
         public static final String COLUMN_NAME_ARTICLE = "article";
         public static final String COLUMN_NAME_DESCRIPTION = "description";
         public static final String COLUMN_NAME_COLLOCATIONS= "collocations";
@@ -46,6 +46,7 @@ public class LinoteContract {
         /*
        Possible Values for the ARTICLE
         */
+        public static final int ARTICLE_NO_ARTICLE  = 0;
         public static final int ARTICLE_DER  = 1;
         public static final int ARTICLE_DIE  = 2;
         public static final int ARTICLE_DAS  = 3;

@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.android.linote.Database.LinoteContract;
 
@@ -109,7 +110,7 @@ public class AddNewWord extends AppCompatActivity {
             case R.id.action_save:
                 // Do nothing for now
                 saveWord();
-                finish();
+                //finish();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -142,18 +143,20 @@ public class AddNewWord extends AppCompatActivity {
     private void saveWord (){
         ContentValues content = new ContentValues();
         content.put(LinoteContract.LinoteEntry.COLUMN_NAME_LANGUAGE, lang);
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_WORD, String.valueOf(inputWord.getText()));
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION, String.valueOf(inputTranslation.getText()));
+        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_WORD, inputWord.getText().toString().trim());
+        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION, inputTranslation.getText().toString().trim());
         content.put(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH, pos);
         content.put(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE, article);
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_DESCRIPTION, String.valueOf(inputDescription.getText()));
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS, String.valueOf(inputCollocations.getText()));
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES, String.valueOf(inputExamples.getText()));
+        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_DESCRIPTION, inputDescription.getText().toString().trim());
+        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS, inputCollocations.getText().toString().trim());
+        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES, inputExamples.getText().toString().trim());
+
         Uri uriResult = getContentResolver().insert(LinoteContract.LinoteEntry.CONTENT_URI, content);
         if(uriResult != null){
             Snackbar.make(scroll, "Word was added", Snackbar.LENGTH_SHORT).show();
         }else{
-            Snackbar.make(scroll, "Word was not added", Snackbar.LENGTH_SHORT).show();
+            //Snackbar.make(scroll, "Word was not added", Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(this,"Not ADDED!!!!!", Toast.LENGTH_LONG).show();
 
         }
 
@@ -226,6 +229,7 @@ public class AddNewWord extends AppCompatActivity {
                 }
                 switch (position){
                     case 0:
+                        article = LinoteContract.LinoteEntry.ARTICLE_NO_ARTICLE;
                         break;
                     case 1:
                         article = LinoteContract.LinoteEntry.ARTICLE_DER;
