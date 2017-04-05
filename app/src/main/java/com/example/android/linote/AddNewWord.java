@@ -30,10 +30,11 @@ public class AddNewWord extends AppCompatActivity {
                 R.array.chose_pos_spinner, android.R.layout.simple_spinner_dropdown_item);
         spinnerChosePos.setAdapter(spinnerAdapterPos);
 
-        Spinner spinnerChoseArticle = (Spinner) findViewById(R.id.spinner_article);
+        final Spinner spinnerChoseArticle = (Spinner) findViewById(R.id.spinner_article);
         ArrayAdapter<CharSequence> spinnerAdapterArticle = ArrayAdapter.createFromResource(this,
                 R.array.chose_article_spinner, android.R.layout.simple_spinner_dropdown_item);
         spinnerChoseArticle.setAdapter(spinnerAdapterArticle);
+        spinnerChoseArticle.setVisibility(View.GONE);
 
         spinnerChoseLang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -49,9 +50,11 @@ public class AddNewWord extends AppCompatActivity {
                         break;
                     case 1:
                         Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
+                        spinnerChoseArticle.setVisibility(View.GONE);
                         break;
                     case 2:
                         Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
+                        spinnerChoseArticle.setVisibility(View.VISIBLE);
                         break;
                 }
             }
