@@ -5,6 +5,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -130,10 +131,14 @@ public class LinoteProvider extends ContentProvider {
     */
     private Uri insertWord(Uri uri, ContentValues values) {
         database = mDbHelper.getWritableDatabase();
-        long id = database.insert(LinoteEntry.TABLE_NAME, null, values);
-
-        if (id == -1) {
-            Log.e(LOG_TAG, "Failed to insert row for " + uri);
+        long id;
+        try {
+            id = database.insert(LinoteEntry.TABLE_NAME, null, values);
+            if (id == -1) {
+                return null;
+            }
+        } catch (SQLException e){
+            Log.e(LOG_TAG, "Failed to insert row for " + uri, e);
             return null;
         }
         getContext().getContentResolver().notifyChange(uri, null);

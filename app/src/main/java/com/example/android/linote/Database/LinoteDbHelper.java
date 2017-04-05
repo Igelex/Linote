@@ -19,16 +19,16 @@ public class LinoteDbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "linote.db";
 
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + LinoteEntry.TABLE_NAME + " ( "
+            "CREATE TABLE " + LinoteEntry.TABLE_NAME + " ("
             + LinoteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + LinoteEntry.COLUMN_NAME_LANGUAGE + " INTEGER NOT NULL, "
-            + LinoteEntry.COLUMN_NAME_WORD + " VARCHAR(20) NOT NULL, "
-            + LinoteEntry.COLUMN_NAME_TRANSLATION + " VARCHAR(100) NOT NULL, "
+            + LinoteEntry.COLUMN_NAME_WORD + " TEXT NOT NULL, "
+            + LinoteEntry.COLUMN_NAME_TRANSLATION + " TEXT NOT NULL, "
             + LinoteEntry.COLUMN_NAME_PARTOFSPEECH + " INTEGER NOT NULL, "
-            + LinoteEntry.COLUMN_NAME_ARTICLE + " INTEGER, "
-            + LinoteEntry.COLUMN_NAME_DESCRIPTION + " VARCHAR(200), "
-            + LinoteEntry.COLUMN_NAME_COLLOCATIONS + " VARCHAR(200), "
-            + LinoteEntry.COLUMN_NAME_EXAMPLES + " VARCHAR(200) "
+            + LinoteEntry.COLUMN_NAME_ARTICLE + " INTEGER DEFAULT 0, "
+            + LinoteEntry.COLUMN_NAME_DESCRIPTION + " TEXT), "
+            + LinoteEntry.COLUMN_NAME_COLLOCATIONS + " TEXT, "
+            + LinoteEntry.COLUMN_NAME_EXAMPLES + " TEXT) "
             + ");";
 
     public LinoteDbHelper(Context context) {

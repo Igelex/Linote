@@ -1,5 +1,6 @@
 package com.example.android.linote;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -63,6 +64,7 @@ public class AddNewWord extends AppCompatActivity {
                 }
                 switch (position){
                     case 0:
+                        lang = LinoteContract.LinoteEntry.LANGUAGE_NO_LANGUAGE_SELECTED;
                         Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
                         break;
                     case 1:
@@ -104,15 +106,11 @@ public class AddNewWord extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                // Do nothing for now
                 saveWord();
                 //finish();
                 return true;
-            // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
                 //showDeleteConfirmationDialog();
                 return true;
@@ -141,19 +139,22 @@ public class AddNewWord extends AppCompatActivity {
     Helper Method to Save Word
     */
     private void saveWord (){
-        ContentValues content = new ContentValues();
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_LANGUAGE, lang);
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_WORD, inputWord.getText().toString().trim());
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION, inputTranslation.getText().toString().trim());
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH, pos);
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE, article);
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_DESCRIPTION, inputDescription.getText().toString().trim());
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS, inputCollocations.getText().toString().trim());
-        content.put(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES, inputExamples.getText().toString().trim());
 
-        Uri uriResult = getContentResolver().insert(LinoteContract.LinoteEntry.CONTENT_URI, content);
+        String word = inputWord.getText().toString().trim();
+
+        ContentValues values = new ContentValues();
+        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_LANGUAGE, lang);
+        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_WORD, word);
+        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION, inputTranslation.getText().toString().trim());
+        //values.put(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH, pos);
+        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE, article);
+        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_DESCRIPTION, inputDescription.getText().toString().trim());
+        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS, inputCollocations.getText().toString().trim());
+        values.put(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES, inputExamples.getText().toString().trim());
+
+        Uri uriResult = getContentResolver().insert(LinoteContract.LinoteEntry.CONTENT_URI, values);
         if(uriResult != null){
-            Snackbar.make(scroll, "Word was added", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(scroll, "Word was added with ID: " + ContentUris.parseId(uriResult), Snackbar.LENGTH_SHORT).show();
         }else{
             //Snackbar.make(scroll, "Word was not added", Snackbar.LENGTH_SHORT).show();
             Toast.makeText(this,"Not ADDED!!!!!", Toast.LENGTH_LONG).show();
@@ -178,6 +179,7 @@ public class AddNewWord extends AppCompatActivity {
                 }
                 switch (position){
                     case 0:
+                        pos = LinoteContract.LinoteEntry.POS_NO_POS_SELECTED;
                         break;
                     case 1:
                         pos = LinoteContract.LinoteEntry.POS_NOUN;
