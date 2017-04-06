@@ -56,15 +56,15 @@ public class LinoteCursorAdapter extends CursorAdapter {
 
         defaultWord.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_WORD)));
         translation.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
-        String pos =(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
-        String article =(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
+        String pos = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH)));
+        String article = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
         final Uri mCurrentUri = ContentUris.withAppendedId(LinoteContract.LinoteEntry.CONTENT_URI,
-                            cursor.getInt(cursor.getColumnIndex(LinoteContract.LinoteEntry._ID)));
+                cursor.getInt(cursor.getColumnIndex(LinoteContract.LinoteEntry._ID)));
 
-        if(TextUtils.isEmpty(article)){
+        if (article == null) {
             details.setText(pos);
-        }else{
-            details.setText(pos + "," + article);
+        } else {
+            details.setText(pos + ", " + article);
         }
 
         menuButton.setOnClickListener(new View.OnClickListener() {
@@ -72,15 +72,9 @@ public class LinoteCursorAdapter extends CursorAdapter {
             public void onClick(View view) {
                 PopupMenu popup = new PopupMenu(context, menuButton);
                 popup.inflate(R.menu.card_bar_menu);
-                Snackbar.make(view, "Menu clicked", Snackbar.LENGTH_SHORT).show();
-                Toast.makeText(context,"Selected: " + mCurrentUri, Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Menu clicked: " + mCurrentUri, Snackbar.LENGTH_SHORT).show();
             }
         });
-
-        //MenuInflater inflater = popup.getMenuInflater();
-        //inflater.inflate(R.menu.card_bar_menu, view);
-
-
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,10 +7,12 @@
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
     android:layout_marginTop="16dp"
+    android:background="@android:color/transparent"
     android:orientation="vertical"
     card_view:cardBackgroundColor="@android:color/white"
     card_view:cardCornerRadius="2dp"
-    card_view:cardElevation="4dp">
+    card_view:cardElevation="4dp"
+    android:cacheColorHint="@android:color/transparent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,20 +24,22 @@
             style="@style/card_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
             android:maxLines="1"
             android:text="Default Word"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/translation"
             style="@style/card_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:maxLines="2"
             android:text="Translation"
-            android:textSize="12sp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+            android:textColor="#9c9c9c"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/details"
@@ -43,10 +47,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:layout_marginTop="5dp"
             android:maxLines="1"
             android:text="Details"
             android:textColor="#1bbf2e"
-            android:textSize="11sp" />
+            android:textSize="14sp" />
 
 
         <LinearLayout

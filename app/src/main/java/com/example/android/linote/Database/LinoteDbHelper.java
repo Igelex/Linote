@@ -24,8 +24,8 @@ public class LinoteDbHelper extends SQLiteOpenHelper {
             + LinoteEntry.COLUMN_NAME_LANGUAGE + " INTEGER NOT NULL, "
             + LinoteEntry.COLUMN_NAME_WORD + " TEXT NOT NULL, "
             + LinoteEntry.COLUMN_NAME_TRANSLATION + " TEXT NOT NULL, "
-            + LinoteEntry.COLUMN_NAME_PARTOFSPEECH + " INTEGER NOT NULL, "
-            + LinoteEntry.COLUMN_NAME_ARTICLE + " INTEGER DEFAULT 0, "
+            + LinoteEntry.COLUMN_NAME_PARTOFSPEECH + " TEXT NOT NULL, "
+            + LinoteEntry.COLUMN_NAME_ARTICLE + " TEXT , "
             + LinoteEntry.COLUMN_NAME_DESCRIPTION + " TEXT, "
             + LinoteEntry.COLUMN_NAME_COLLOCATIONS + " TEXT, "
             + LinoteEntry.COLUMN_NAME_EXAMPLES + " TEXT );";

@@ -33,8 +33,8 @@ public class AddNewWord extends AppCompatActivity {
     private EditText inputCollocations;
     private EditText inputExamples;
     private int lang;
-    private int pos;
-    private int article;
+    private String pos;
+    private String article;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,31 +180,31 @@ public class AddNewWord extends AppCompatActivity {
                 }
                 switch (position){
                     case 0:
-                        pos = LinoteEntry.POS_NO_POS_SELECTED;
+                        pos = getString(R.string.chose_pos);
                         break;
                     case 1:
-                        pos = LinoteEntry.POS_NOUN;
+                        pos = getString(R.string.noun);
                         break;
                     case 2:
-                        pos = LinoteEntry.POS_PRONOUN;
+                        pos = getString(R.string.pronoun);
                         break;
                     case 3:
-                        pos = LinoteEntry.POS_VERB;
+                        pos = getString(R.string.verb);
                         break;
                     case 4:
-                        pos = LinoteEntry.POS_ADVERB;
+                        pos = getString(R.string.adverb);
                         break;
                     case 5:
-                        pos = LinoteEntry.POS_ADJECTIVE;
+                        pos = getString(R.string.adjective);
                         break;
                     case 6:
-                        pos = LinoteEntry.POS_CONJUNCTIVE;
+                        pos = getString(R.string.conjunction);
                         break;
                     case 7:
-                        pos = LinoteEntry.POS_PREPOSITION;
+                        pos = getString(R.string.preposition);;
                         break;
                     case 8:
-                        pos = LinoteEntry.POS_INTERJECTION;
+                        pos = getString(R.string.interjection);;
                         break;
                 }
             }
@@ -232,16 +232,16 @@ public class AddNewWord extends AppCompatActivity {
                 }
                 switch (position){
                     case 0:
-                        article = LinoteEntry.ARTICLE_NO_ARTICLE;
+                        article = null;
                         break;
                     case 1:
-                        article = LinoteEntry.ARTICLE_DER;
+                        article = getString(R.string.der);
                         break;
                     case 2:
-                        pos = LinoteEntry.ARTICLE_DIE;
+                        article = getString(R.string.die);
                         break;
                     case 3:
-                        pos = LinoteEntry.ARTICLE_DAS;
+                        article = getString(R.string.das);
                         break;
                 }
             }
