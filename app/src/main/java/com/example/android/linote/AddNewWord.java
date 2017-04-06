@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,9 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.android.linote.Database.LinoteContract;
 
 import static com.example.android.linote.Database.LinoteContract.*;
 
@@ -35,6 +32,9 @@ public class AddNewWord extends AppCompatActivity {
     private int lang;
     private String pos;
     private String article;
+    private Spinner spinnerChosePos;
+    private Spinner mArticleSpinner;
+    private Spinner spinnerChoseLang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +43,14 @@ public class AddNewWord extends AppCompatActivity {
 
         scroll = (ScrollView) findViewById(R.id.scroll_view);
         inputWord = (EditText) findViewById(R.id.input_word);
-        inputTranslation  = (EditText) findViewById(R.id.input_translation);
-        inputDescription  = (EditText) findViewById(R.id.input_description);
-        inputCollocations  = (EditText) findViewById(R.id.input_collocations);
-        inputExamples  = (EditText) findViewById(R.id.input_examples);
+        inputTranslation = (EditText) findViewById(R.id.input_translation);
+        inputDescription = (EditText) findViewById(R.id.input_description);
+        inputCollocations = (EditText) findViewById(R.id.input_collocations);
+        inputExamples = (EditText) findViewById(R.id.input_examples);
 
-        setupPosSpinner();
-        final Spinner mArticleSpinner = setupArticleSpinner();
+        mArticleSpinner = setupArticleSpinner();
 
-        Spinner spinnerChoseLang = (Spinner) findViewById(R.id.chose_lang_spinner);
+        spinnerChoseLang = (Spinner) findViewById(R.id.chose_lang_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.chose_lang_spinner, android.R.layout.simple_spinner_dropdown_item);
         spinnerChoseLang.setAdapter(spinnerAdapter);
@@ -61,23 +60,20 @@ public class AddNewWord extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
 
-                if(selection.equals(getString(R.string.page_title_eng))){
+                if (selection.equals(getString(R.string.page_title_eng))) {
                     Snackbar.make(view, "Item on Position :" + position + " ist Selected: " + selection, Snackbar.LENGTH_SHORT).show();
                 }
-                switch (position){
+                switch (position) {
                     case 0:
                         lang = LinoteEntry.LANGUAGE_NO_LANGUAGE_SELECTED;
-                        Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
                         break;
                     case 1:
                         lang = LinoteEntry.LANGUAGE_ENGLISH;
-                        Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
                         mArticleSpinner.setVisibility(View.GONE);
                         break;
                     case 2:
                         lang = LinoteEntry.LANGUAGE_GERMAN;
-                        Snackbar.make(view, "Item Selected: " + selection, Snackbar.LENGTH_SHORT).show();
-                        mArticleSpinner.setVisibility(View.VISIBLE);
+                        setArticleSpinnerVisible();
                         break;
                 }
             }
@@ -87,15 +83,20 @@ public class AddNewWord extends AppCompatActivity {
             }
         });
 
+        /*
+        Setup the Chose-POS-Spinner and check Lang-Spinner
+         */
+        setupPosSpinner(spinnerChoseLang);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-         getMenuInflater().inflate(R.menu.add_new_word_menu, menu);
+        getMenuInflater().inflate(R.menu.add_new_word_menu, menu);
         return true;
     }
 
-    public int deleteWord(Uri uri){
+    public int deleteWord(Uri uri) {
         mCurrentPetUri = uri;
         int rowsDeleted = getContentResolver().delete(mCurrentPetUri, null, null);
         if (rowsDeleted > 0) {
@@ -103,7 +104,7 @@ public class AddNewWord extends AppCompatActivity {
         } else {
             Snackbar.make(scroll, "Word not deleted", Snackbar.LENGTH_SHORT).show();
         }
-        return  rowsDeleted;
+        return rowsDeleted;
     }
 
     @Override
@@ -111,7 +112,7 @@ public class AddNewWord extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveWord();
-                //finish();
+                finish();
                 return true;
             case R.id.action_delete:
                 //showDeleteConfirmationDialog();
@@ -140,7 +141,7 @@ public class AddNewWord extends AppCompatActivity {
     /*
     Helper Method to Save Word
     */
-    private void saveWord (){
+    private void saveWord() {
 
         String word = inputWord.getText().toString().trim();
 
@@ -155,17 +156,17 @@ public class AddNewWord extends AppCompatActivity {
         values.put(LinoteEntry.COLUMN_NAME_EXAMPLES, inputExamples.getText().toString().trim());
 
         Uri uriResult = getContentResolver().insert(LinoteEntry.CONTENT_URI, values);
-        if(uriResult != null){
+        if (uriResult != null) {
             Snackbar.make(scroll, "Word was added with ID: " + ContentUris.parseId(uriResult), Snackbar.LENGTH_SHORT).show();
-        }else{
+        } else {
             Snackbar.make(scroll, "Word was not added", Snackbar.LENGTH_SHORT).show();
 
         }
 
     }
 
-    private void setupPosSpinner(){
-        Spinner spinnerChosePos = (Spinner) findViewById(R.id.spinner_partofspeech);
+    private void setupPosSpinner(final Spinner spinner) {
+        spinnerChosePos = (Spinner) findViewById(R.id.spinner_partofspeech);
         ArrayAdapter<CharSequence> spinnerAdapterPos = ArrayAdapter.createFromResource(this,
                 R.array.chose_pos_spinner, android.R.layout.simple_spinner_dropdown_item);
         spinnerChosePos.setAdapter(spinnerAdapterPos);
@@ -175,10 +176,10 @@ public class AddNewWord extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
 
-                if(selection.equals(getString(R.string.page_title_eng))){
+                if (selection.equals(getString(R.string.page_title_eng))) {
                     Snackbar.make(view, "Item on Position :" + position + " ist Selected: " + selection, Snackbar.LENGTH_SHORT).show();
                 }
-                switch (position){
+                switch (position) {
                     case 0:
                         pos = getString(R.string.chose_pos);
                         break;
@@ -201,12 +202,15 @@ public class AddNewWord extends AppCompatActivity {
                         pos = getString(R.string.conjunction);
                         break;
                     case 7:
-                        pos = getString(R.string.preposition);;
+                        pos = getString(R.string.preposition);
+                        ;
                         break;
                     case 8:
-                        pos = getString(R.string.interjection);;
+                        pos = getString(R.string.interjection);
+                        ;
                         break;
                 }
+                setArticleSpinnerVisible();
             }
 
             @Override
@@ -215,8 +219,8 @@ public class AddNewWord extends AppCompatActivity {
         });
     }
 
-    private Spinner setupArticleSpinner(){
-        final Spinner spinnerChoseArticle = (Spinner) findViewById(R.id.spinner_article);
+    private Spinner setupArticleSpinner() {
+        Spinner spinnerChoseArticle = (Spinner) findViewById(R.id.spinner_article);
         ArrayAdapter<CharSequence> spinnerAdapterArticle = ArrayAdapter.createFromResource(this,
                 R.array.chose_article_spinner, android.R.layout.simple_spinner_dropdown_item);
         spinnerChoseArticle.setAdapter(spinnerAdapterArticle);
@@ -225,12 +229,7 @@ public class AddNewWord extends AppCompatActivity {
         spinnerChoseArticle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-
-                if(selection.equals(getString(R.string.page_title_eng))){
-                    Snackbar.make(view, "Item on Position :" + position + " ist Selected: " + selection, Snackbar.LENGTH_SHORT).show();
-                }
-                switch (position){
+                switch (position) {
                     case 0:
                         article = null;
                         break;
@@ -251,5 +250,14 @@ public class AddNewWord extends AppCompatActivity {
             }
         });
         return spinnerChoseArticle;
+    }
+
+    private void setArticleSpinnerVisible() {
+        if (spinnerChosePos.getSelectedItemPosition() == LinoteEntry.POS_NOUN
+                && spinnerChoseLang.getSelectedItemPosition() == LinoteEntry.LANGUAGE_GERMAN) {
+            mArticleSpinner.setVisibility(View.VISIBLE);
+        } else {
+            mArticleSpinner.setVisibility(View.GONE);
+        }
     }
 }

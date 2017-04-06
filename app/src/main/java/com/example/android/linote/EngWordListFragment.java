@@ -1,19 +1,26 @@
 package com.example.android.linote;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.android.linote.Database.LinoteContract;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EngWordListFragment extends Fragment {
+public class EngWordListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static LinoteCursorAdapter mAdapter;
 
     public EngWordListFragment() {
         // Required empty public constructor
@@ -27,7 +34,31 @@ public class EngWordListFragment extends Fragment {
 
         ListView listView = (ListView) rootView.findViewById(R.id.words_list_view);
 
+        mAdapter = new LinoteCursorAdapter(getContext(),null);
+        listView.setAdapter(mAdapter);
+
+        getLoaderManager().initLoader(0, null, this);
+
         return rootView;
     }
 
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getContext(),
+                LinoteContract.LinoteEntry.CONTENT_URI,
+                LinoteContract.LinoteEntry.PROJECTION,
+                LinoteContract.LinoteEntry.SELECTION_ENG_WORDS,
+                LinoteContract.LinoteEntry.SELECTION_ARGS_ENG_WORDS, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
+    }
 }
