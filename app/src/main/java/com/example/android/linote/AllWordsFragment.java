@@ -1,9 +1,9 @@
 package com.example.android.linote;
 
 
-import android.app.LoaderManager;
-import android.content.CursorLoader;
-import android.content.Loader;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.android.linote.Database.LinoteContract;
 
@@ -19,6 +18,8 @@ import com.example.android.linote.Database.LinoteContract;
  * A simple {@link Fragment} subclass.
  */
 public class AllWordsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static LinoteCursorAdapter mAdapter;
 
 
     public AllWordsFragment() {
@@ -32,8 +33,10 @@ public class AllWordsFragment extends Fragment implements LoaderManager.LoaderCa
         View rootView = inflater.inflate(R.layout.word_list, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.words_list_view);
 
-        LinoteCursorAdapter adapter = new LinoteCursorAdapter(getContext(),null);
-        listView.setAdapter(adapter);
+        mAdapter = new LinoteCursorAdapter(getContext(),null);
+        listView.setAdapter(mAdapter);
+
+        getLoaderManager().initLoader(0, null, this);
 
 
         return rootView;
@@ -49,11 +52,12 @@ public class AllWordsFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mAdapter.swapCursor(cursor);
 
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        mAdapter.swapCursor(null);
     }
 }

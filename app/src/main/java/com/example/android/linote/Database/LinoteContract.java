@@ -72,8 +72,8 @@ public final class LinoteContract {
         /**
          * Projections
          */
-        public static final String [] PROJECTION = {_ID + COLUMN_NAME_WORD + COLUMN_NAME_TRANSLATION
-                                                + COLUMN_NAME_PARTOFSPEECH + COLUMN_NAME_ARTICLE};
+        public static final String [] PROJECTION = {_ID, COLUMN_NAME_WORD, COLUMN_NAME_TRANSLATION,
+                                                COLUMN_NAME_PARTOFSPEECH, COLUMN_NAME_ARTICLE};
 
         /**
          * Selections

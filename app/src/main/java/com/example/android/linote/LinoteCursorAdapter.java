@@ -16,7 +16,9 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.linote.Database.LinoteContract;
 import com.example.android.linote.R;
@@ -30,7 +32,6 @@ import static java.security.AccessController.getContext;
 public class LinoteCursorAdapter extends CursorAdapter {
 
     private Context mContext;
-    Uri mCurrentUri;
 
     public LinoteCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
@@ -43,7 +44,7 @@ public class LinoteCursorAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
 
         TextView defaultWord = (TextView) view.findViewById(R.id.default_word);
         TextView translation = (TextView) view.findViewById(R.id.translation);
@@ -51,13 +52,13 @@ public class LinoteCursorAdapter extends CursorAdapter {
 
         ImageButton deleteButton = (ImageButton) view.findViewById(R.id.image_button_delete);
         ImageButton editButton = (ImageButton) view.findViewById(R.id.image_button_edit);
-        ImageButton menuButton = (ImageButton) view.findViewById(R.id.image_button_menu);
+        final ImageButton menuButton = (ImageButton) view.findViewById(R.id.image_button_menu);
 
         defaultWord.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_WORD)));
         translation.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
         String pos =(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
         String article =(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
-        mCurrentUri = ContentUris.withAppendedId(LinoteContract.LinoteEntry.CONTENT_URI,
+        final Uri mCurrentUri = ContentUris.withAppendedId(LinoteContract.LinoteEntry.CONTENT_URI,
                             cursor.getInt(cursor.getColumnIndex(LinoteContract.LinoteEntry._ID)));
 
         if(TextUtils.isEmpty(article)){
@@ -66,26 +67,37 @@ public class LinoteCursorAdapter extends CursorAdapter {
             details.setText(pos + "," + article);
         }
 
-        PopupMenu popup = new PopupMenu(context, menuButton);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.card_bar_menu, null);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popup = new PopupMenu(context, menuButton);
+                popup.inflate(R.menu.card_bar_menu);
+                Snackbar.make(view, "Menu clicked", Snackbar.LENGTH_SHORT).show();
+                Toast.makeText(context,"Selected: " + mCurrentUri, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //MenuInflater inflater = popup.getMenuInflater();
+        //inflater.inflate(R.menu.card_bar_menu, view);
+
+
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDeleteConfirmationDialog();
+                showDeleteConfirmationDialog(mCurrentUri);
             }
         });
 
     }
 
-    private void showDeleteConfirmationDialog() {
+    private void showDeleteConfirmationDialog(final Uri uri) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 AddNewWord n = new AddNewWord();
-                n.deleteWord(mCurrentUri);
+                n.deleteWord(uri);
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

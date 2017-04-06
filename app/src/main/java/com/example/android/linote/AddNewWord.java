@@ -146,7 +146,7 @@ public class AddNewWord extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
         values.put(LinoteEntry.COLUMN_NAME_LANGUAGE, lang);
-        values.put(LinoteEntry.COLUMN_NAME_WORD, word);
+        values.put(LinoteEntry.COLUMN_NAME_WORD, inputWord.getText().toString().trim());
         values.put(LinoteEntry.COLUMN_NAME_TRANSLATION, inputTranslation.getText().toString().trim());
         values.put(LinoteEntry.COLUMN_NAME_PARTOFSPEECH, pos);
         values.put(LinoteEntry.COLUMN_NAME_ARTICLE, article);

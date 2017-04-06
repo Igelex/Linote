@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/word"
-            android:inputType="text"
             android:maxLines="1" />
 
         <EditText
