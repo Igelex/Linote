@@ -25,10 +25,7 @@ public class MainActivity extends AppCompatActivity {
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddNewWord.class);
-                if (intent.resolveActivity(getPackageManager()) != null){
-                    startActivity(intent);
-                }
+                startActivity(new Intent(MainActivity.this, AddNewWord.class));
 
             }
         });

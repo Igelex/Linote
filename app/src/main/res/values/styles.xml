@@ -15,6 +15,20 @@
         <item name="elevation">0dp</item>
     </style>
 
+    <!-- Theme of the editor -->
+    <style name="EditorTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorEditorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorEditorPrimaryDark</item>
+        <item name="colorAccent">@color/colorEditorAccent</item>
+    </style>
+
+    <!-- Theme of the Details-Screen -->
+    <style name="Details_Screen" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorDetailsPrimary</item>
+        <item name="colorPrimaryDark">@color/colorDetailPrimaryDark</item>
+        <item name="colorAccent">@color/colorDetailAccent</item>
+    </style>
+
     <!-- Base Tabs Style. -->
     <style name="tabs_style" parent="Widget.Design.TabLayout">
         <item name="tabSelectedTextColor">@android:color/white</item>
@@ -37,7 +51,7 @@
     <!-- Card Menu Bar Style. -->
     <style name="card_menu_bar">
         <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <!-- Spinners Style. -->
@@ -57,6 +71,15 @@
     <style name="section_text">
         <item name="android:textColor">@color/section_text_color</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

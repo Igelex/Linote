@@ -74,6 +74,8 @@ public final class LinoteContract {
          */
         public static final String [] PROJECTION = {_ID, COLUMN_NAME_WORD, COLUMN_NAME_TRANSLATION,
                                                 COLUMN_NAME_PARTOFSPEECH, COLUMN_NAME_ARTICLE};
+        public static final String [] PROJECTION_DETAILS = {_ID, COLUMN_NAME_LANGUAGE, COLUMN_NAME_WORD, COLUMN_NAME_TRANSLATION,
+                COLUMN_NAME_PARTOFSPEECH, COLUMN_NAME_ARTICLE, COLUMN_NAME_DESCRIPTION, COLUMN_NAME_COLLOCATIONS, COLUMN_NAME_EXAMPLES};
 
         /**
          * Selections
@@ -83,6 +85,13 @@ public final class LinoteContract {
 
         public static final String SELECTION_ENG_WORDS = COLUMN_NAME_LANGUAGE + " =?";
         public static final String [] SELECTION_ARGS_ENG_WORDS = {String.valueOf(LANGUAGE_ENGLISH)};
+
+        /**
+         * Sortorder
+         */
+        public static final String SORT_ORDER = COLUMN_NAME_WORD + " ASC";
+
+
 
 
     }

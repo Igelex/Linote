@@ -50,9 +50,9 @@ public class LinoteCursorAdapter extends CursorAdapter {
         TextView translation = (TextView) view.findViewById(R.id.translation);
         TextView details = (TextView) view.findViewById(R.id.details);
 
-        ImageButton deleteButton = (ImageButton) view.findViewById(R.id.image_button_delete);
-        ImageButton editButton = (ImageButton) view.findViewById(R.id.image_button_edit);
-        final ImageButton menuButton = (ImageButton) view.findViewById(R.id.image_button_menu);
+        //ImageButton deleteButton = (ImageButton) view.findViewById(R.id.image_button_delete);
+        //ImageButton editButton = (ImageButton) view.findViewById(R.id.image_button_edit);
+        //final ImageButton menuButton = (ImageButton) view.findViewById(R.id.image_button_menu);
 
         defaultWord.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_WORD)));
         translation.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
@@ -67,6 +67,20 @@ public class LinoteCursorAdapter extends CursorAdapter {
             details.setText(pos + ", " + article);
         }
 
+        /*eleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDeleteConfirmationDialog(mCurrentUri);
+            }
+        });
+
+        //editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,15 +88,7 @@ public class LinoteCursorAdapter extends CursorAdapter {
                 popup.inflate(R.menu.card_bar_menu);
                 Snackbar.make(view, "Menu clicked: " + mCurrentUri, Snackbar.LENGTH_SHORT).show();
             }
-        });
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDeleteConfirmationDialog(mCurrentUri);
-            }
-        });
-
+        });*/
     }
 
     private void showDeleteConfirmationDialog(final Uri uri) {

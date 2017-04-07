@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         <TextView
             android:id="@+id/default_word"
             style="@style/card_textview"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:text="Default Word"
@@ -32,7 +32,7 @@
         <TextView
             android:id="@+id/translation"
             style="@style/card_textview"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:maxLines="2"
@@ -44,7 +44,7 @@
         <TextView
             android:id="@+id/details"
             style="@style/card_textview"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="5dp"
@@ -54,7 +54,7 @@
             android:textSize="14sp" />
 
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -65,7 +65,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/white"
                 android:src="@drawable/ic_delete_black_24dp" />
 
             <ImageButton
@@ -74,19 +73,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/white"
                 android:src="@drawable/ic_mode_edit_black_24dp" />
 
             <ImageButton
                 android:id="@+id/image_button_menu"
-                style="@style/card_menu_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/white"
                 android:src="@drawable/dots_24dp" />
-        </LinearLayout>
+        </LinearLayout>-->
 
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+</LinearLayout>

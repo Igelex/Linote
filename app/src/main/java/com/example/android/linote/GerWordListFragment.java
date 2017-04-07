@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.android.linote.Database.LinoteContract;
 
@@ -20,7 +19,9 @@ import com.example.android.linote.Database.LinoteContract;
  */
 public class GerWordListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static LinoteCursorAdapter mAdapter;
+    private static LinoteCursorAdapter mAdapterGer;
+    private static final int LOADER_INDEX = 2;
+
 
     public GerWordListFragment() {
         // Required empty public constructor
@@ -32,12 +33,12 @@ public class GerWordListFragment extends Fragment implements LoaderManager.Loade
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.word_list, container, false);
 
-        ListView listView = (ListView) rootView.findViewById(R.id.words_list_view);
+        ListView listView = (ListView) rootView.findViewById(R.id.list_view);
 
-        mAdapter = new LinoteCursorAdapter(getContext(),null);
-        listView.setAdapter(mAdapter);
+        mAdapterGer = new LinoteCursorAdapter(getContext(),null);
+        listView.setAdapter(mAdapterGer);
 
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(LOADER_INDEX, null, this);
 
         return rootView;
     }
@@ -48,16 +49,17 @@ public class GerWordListFragment extends Fragment implements LoaderManager.Loade
                 LinoteContract.LinoteEntry.CONTENT_URI,
                 LinoteContract.LinoteEntry.PROJECTION,
                 LinoteContract.LinoteEntry.SELECTION_GER_WORDS,
-                LinoteContract.LinoteEntry.SELECTION_ARGS_GER_WORDS, null);
+                LinoteContract.LinoteEntry.SELECTION_ARGS_GER_WORDS,
+                LinoteContract.LinoteEntry.SORT_ORDER);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
+        mAdapterGer.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null);
+        mAdapterGer.swapCursor(null);
     }
 }

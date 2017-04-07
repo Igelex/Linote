@@ -3,9 +3,12 @@ package com.example.android.linote;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +23,8 @@ import android.widget.Spinner;
 import static com.example.android.linote.Database.LinoteContract.*;
 
 
-public class AddNewWord extends AppCompatActivity {
+public class AddNewWord extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private Uri mCurrentPetUri;
     private ScrollView scroll;
     private EditText inputWord;
     private EditText inputTranslation;
@@ -49,6 +51,7 @@ public class AddNewWord extends AppCompatActivity {
         inputExamples = (EditText) findViewById(R.id.input_examples);
 
         mArticleSpinner = setupArticleSpinner();
+        setupPosSpinner();
 
         spinnerChoseLang = (Spinner) findViewById(R.id.chose_lang_spinner);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -58,36 +61,24 @@ public class AddNewWord extends AppCompatActivity {
         spinnerChoseLang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-
-                if (selection.equals(getString(R.string.page_title_eng))) {
-                    Snackbar.make(view, "Item on Position :" + position + " ist Selected: " + selection, Snackbar.LENGTH_SHORT).show();
-                }
                 switch (position) {
                     case 0:
                         lang = LinoteEntry.LANGUAGE_NO_LANGUAGE_SELECTED;
                         break;
                     case 1:
                         lang = LinoteEntry.LANGUAGE_ENGLISH;
-                        mArticleSpinner.setVisibility(View.GONE);
                         break;
                     case 2:
                         lang = LinoteEntry.LANGUAGE_GERMAN;
-                        setArticleSpinnerVisible();
                         break;
                 }
+                setArticleSpinnerVisible();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-
-        /*
-        Setup the Chose-POS-Spinner and check Lang-Spinner
-         */
-        setupPosSpinner(spinnerChoseLang);
-
     }
 
     @Override
@@ -97,8 +88,7 @@ public class AddNewWord extends AppCompatActivity {
     }
 
     public int deleteWord(Uri uri) {
-        mCurrentPetUri = uri;
-        int rowsDeleted = getContentResolver().delete(mCurrentPetUri, null, null);
+        int rowsDeleted = getContentResolver().delete(uri, null, null);
         if (rowsDeleted > 0) {
             Snackbar.make(scroll, "Word deleted", Snackbar.LENGTH_SHORT).show();
         } else {
@@ -117,7 +107,6 @@ public class AddNewWord extends AppCompatActivity {
             case R.id.action_delete:
                 //showDeleteConfirmationDialog();
                 return true;
-            // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
                 /*if (!mPetHasChanged) {
                     NavUtils.navigateUpFromSameTask(EditorActivity.this);
@@ -165,7 +154,7 @@ public class AddNewWord extends AppCompatActivity {
 
     }
 
-    private void setupPosSpinner(final Spinner spinner) {
+    private void setupPosSpinner() {
         spinnerChosePos = (Spinner) findViewById(R.id.spinner_partofspeech);
         ArrayAdapter<CharSequence> spinnerAdapterPos = ArrayAdapter.createFromResource(this,
                 R.array.chose_pos_spinner, android.R.layout.simple_spinner_dropdown_item);
@@ -257,7 +246,25 @@ public class AddNewWord extends AppCompatActivity {
                 && spinnerChoseLang.getSelectedItemPosition() == LinoteEntry.LANGUAGE_GERMAN) {
             mArticleSpinner.setVisibility(View.VISIBLE);
         } else {
+            mArticleSpinner.setSelection(0);
+            article = null;
             mArticleSpinner.setVisibility(View.GONE);
+
         }
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }
