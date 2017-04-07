@@ -28,6 +28,11 @@ public class WebActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web);
         progressBar = (ProgressBar) findViewById(R.id.progressBar_line);
 
+        Intent intent = getIntent();
+        Uri mCurrentUri = intent.getData();
+
+        setTitle(mCurrentUri.toString());
+
         myWebView = (WebView) findViewById(webview);
         WebSettings webSettings = myWebView.getSettings();
 
@@ -35,8 +40,8 @@ public class WebActivity extends AppCompatActivity {
         webSettings.setBuiltInZoomControls(true);
         webSettings.setSupportZoom(true);
 
-        Intent intent = getIntent();
-        Uri mCurrentUri = intent.getData();
+        Bundle bundle = getIntent().getExtras();
+        setTitle(bundle.getString("title"));
 
 
         myWebView.setWebChromeClient(new WebChromeClient() {

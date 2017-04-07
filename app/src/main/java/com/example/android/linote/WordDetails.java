@@ -15,12 +15,14 @@ import android.widget.TextView;
 
 import com.example.android.linote.Database.LinoteContract;
 
+import static android.R.id.edit;
+import static android.provider.Contacts.SettingsColumns.KEY;
+
 public class WordDetails extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private boolean mWordHasChanged = false;
     private Uri mCurrentUri;
-    private String wordWebUri;
-    private String translationDirection;
+    private String wordWebUri, intentString, translationDirection;
     private TextView word, translation, details, description, examples, collocations;
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -56,10 +58,11 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
             public void onClick(View view) {
 
                 Uri wikiUri = Uri.parse("https://www.lingvolive.com/en-us/translate/" + translationDirection
-                                + "/" + wordWebUri);
+                        + "/" + wordWebUri);
                 Intent intent = new Intent(WordDetails.this, WebActivity.class);
-                intent.setData( wikiUri);
-                if (intent.resolveActivity(getPackageManager()) != null){
+                intent.setData(wikiUri);
+                intent.putExtra("title", intentString);
+                if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
             }
@@ -68,11 +71,11 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Uri googleUri = Uri.parse("https://www.google.ru/?gws_rd=ssl#newwindow=1&q=" + wordWebUri.toLowerCase());
                 Intent intent = new Intent(WordDetails.this, WebActivity.class);
-                intent.setData( googleUri);
-                if (intent.resolveActivity(getPackageManager()) != null){
+                intent.setData(googleUri);
+                intent.putExtra(Intent.EXTRA_TEXT, word.getText().toString());
+                if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
             }
@@ -103,7 +106,8 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
             String examp = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES)));
             String colloc = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS)));
 
-            switch (language){
+            intentString = word.getText().toString();
+            switch (language) {
                 case LinoteContract.LinoteEntry.LANGUAGE_ENGLISH:
                     translationDirection = "en-ru";
                     break;
