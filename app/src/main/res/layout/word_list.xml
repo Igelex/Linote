@@ -7,6 +7,11 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@android:color/transparent"
-    android:drawSelectorOnTop="true">
+    android:divider="@null"
+    android:dividerHeight="10dp"
+    android:drawSelectorOnTop="true"
+    android:footerDividersEnabled="false"
+    android:headerDividersEnabled="false"
+    android:cacheColorHint="@android:color/transparent">
 
 </ListView>

@@ -74,7 +74,7 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
                 Uri googleUri = Uri.parse("https://www.google.ru/?gws_rd=ssl#newwindow=1&q=" + wordWebUri.toLowerCase());
                 Intent intent = new Intent(WordDetails.this, WebActivity.class);
                 intent.setData(googleUri);
-                intent.putExtra(Intent.EXTRA_TEXT, word.getText().toString());
+                intent.putExtra("title", intentString);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
