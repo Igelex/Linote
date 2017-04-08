@@ -15,6 +15,10 @@
     <color name="colorDetailPrimaryDark">#23408e</color>
     <color name="colorDetailAccent">#FF4081</color>
 
+    <!-- Empty View background Color -->
+    <color name="colorEmptyBackground">#e2e2e2</color>
+    <color name="colorEmptyText">#b6b6b6</color>
+
     <!-- ProgresBar Color -->
     <color name="colorProgresBar">#3affc1</color>
 </resources>

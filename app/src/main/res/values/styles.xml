@@ -87,5 +87,14 @@
         <item name="colorAccent">@color/colorProgresBar</item>
     </style>
 
+    <!-- Emty View textstyle -->
+    <style name="empty_text_style">
+        <item name="android:textColor">@color/colorEmptyText</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sens-serif-light</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
 
 </resources>

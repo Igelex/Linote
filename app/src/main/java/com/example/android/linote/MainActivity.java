@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ListView listView = (ListView) findViewById(R.id.list_view);
         mAdapter = new LinoteCursorAdapter(this,null);
         listView.setAdapter(mAdapter);
+        listView.setEmptyView(findViewById(R.id.empty_view_container));
 
         getLoaderManager().initLoader(LOADER_INDEX, null, this);
 
