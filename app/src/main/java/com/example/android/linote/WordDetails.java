@@ -1,6 +1,7 @@
 package com.example.android.linote;
 
 import android.app.LoaderManager;
+import android.app.SearchManager;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -57,10 +58,10 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
             @Override
             public void onClick(View view) {
 
-                Uri wikiUri = Uri.parse("https://www.lingvolive.com/en-us/translate/" + translationDirection
+                Uri abbyUri = Uri.parse("https://www.lingvolive.com/en-us/translate/" + translationDirection
                         + "/" + wordWebUri);
                 Intent intent = new Intent(WordDetails.this, WebActivity.class);
-                intent.setData(wikiUri);
+                intent.setData(abbyUri);
                 intent.putExtra("title", intentString);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
@@ -71,10 +72,9 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri googleUri = Uri.parse("https://www.google.ru/?gws_rd=ssl#newwindow=1&q=" + wordWebUri.toLowerCase());
-                Intent intent = new Intent(WordDetails.this, WebActivity.class);
-                intent.setData(googleUri);
-                intent.putExtra("title", intentString);
+                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, wordWebUri.toLowerCase()); // query contains search string
+                startActivity(intent);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }

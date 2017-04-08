@@ -2,28 +2,35 @@ package com.example.android.linote;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+
+import com.example.android.linote.Database.LinoteContract;
 
 import static com.example.android.linote.Database.LinoteContract.*;
 
 
-public class AddNewWord extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class AddNewWord extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<Cursor> {
 
     private ScrollView scroll;
     private EditText inputWord;
@@ -37,11 +44,33 @@ public class AddNewWord extends AppCompatActivity implements LoaderManager.Loade
     private Spinner spinnerChosePos;
     private Spinner mArticleSpinner;
     private Spinner spinnerChoseLang;
+    private int INSERT_MODE = 0;
+    private Uri mCurrentUri;
+
+    private boolean mWordchanges = false;
+
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mWordchanges = true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_new_word_activity);
+
+        Intent intent = getIntent();
+        mCurrentUri = intent.getData();
+
+        if (mCurrentUri != null) {
+            setTitle(R.string.edit_word_titel);
+            INSERT_MODE = 1;
+            getLoaderManager().initLoader(0, null, this);
+        }
+
 
         scroll = (ScrollView) findViewById(R.id.scroll_view);
         inputWord = (EditText) findViewById(R.id.input_word);
@@ -49,6 +78,12 @@ public class AddNewWord extends AppCompatActivity implements LoaderManager.Loade
         inputDescription = (EditText) findViewById(R.id.input_description);
         inputCollocations = (EditText) findViewById(R.id.input_collocations);
         inputExamples = (EditText) findViewById(R.id.input_examples);
+
+        inputWord.setOnTouchListener(mTouchListener);
+        inputTranslation.setOnTouchListener(mTouchListener);
+        inputExamples.setOnTouchListener(mTouchListener);
+        inputCollocations.setOnTouchListener(mTouchListener);
+        inputDescription.setOnTouchListener(mTouchListener);
 
         mArticleSpinner = setupArticleSpinner();
         setupPosSpinner();
@@ -87,14 +122,15 @@ public class AddNewWord extends AppCompatActivity implements LoaderManager.Loade
         return true;
     }
 
-    public int deleteWord(Uri uri) {
-        int rowsDeleted = getContentResolver().delete(uri, null, null);
-        if (rowsDeleted > 0) {
-            Snackbar.make(scroll, "Word deleted", Snackbar.LENGTH_SHORT).show();
-        } else {
-            Snackbar.make(scroll, "Word not deleted", Snackbar.LENGTH_SHORT).show();
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (mCurrentUri == null) {
+            MenuItem menuItem = menu.findItem(R.id.action_delete);
+            menuItem.setVisible(false);
         }
-        return rowsDeleted;
+        return true;
+
     }
 
     @Override
@@ -102,37 +138,43 @@ public class AddNewWord extends AppCompatActivity implements LoaderManager.Loade
         switch (item.getItemId()) {
             case R.id.action_save:
                 saveWord();
-                finish();
                 return true;
             case R.id.action_delete:
-                //showDeleteConfirmationDialog();
+                showDeleteConfirmationDialog();
                 return true;
             case android.R.id.home:
-                /*if (!mPetHasChanged) {
-                    NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                if (!mWordchanges) {
+                    NavUtils.navigateUpFromSameTask(AddNewWord.this);
                     return true;
                 }
-
                 DialogInterface.OnClickListener discardButtonClickListener =
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                // User clicked "Discard" button, navigate to parent activity.
-                                NavUtils.navigateUpFromSameTask(EditorActivity.this);
+                                NavUtils.navigateUpFromSameTask(AddNewWord.this);
                             }
                         };
                 showUnsavedChangesDialog(discardButtonClickListener);
-                return true;*/
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+    Helper Method to delete Word
+    */
+    public int deleteWord(Uri uri) {
+        int rowsDeleted = getContentResolver().delete(uri, null, null);
+        if (rowsDeleted > 0) {
+            finish();
+        }
+        return rowsDeleted;
     }
 
     /*
     Helper Method to Save Word
     */
     private void saveWord() {
-
-        String word = inputWord.getText().toString().trim();
 
         ContentValues values = new ContentValues();
         values.put(LinoteEntry.COLUMN_NAME_LANGUAGE, lang);
@@ -144,11 +186,26 @@ public class AddNewWord extends AppCompatActivity implements LoaderManager.Loade
         values.put(LinoteEntry.COLUMN_NAME_COLLOCATIONS, inputCollocations.getText().toString().trim());
         values.put(LinoteEntry.COLUMN_NAME_EXAMPLES, inputExamples.getText().toString().trim());
 
-        Uri uriResult = getContentResolver().insert(LinoteEntry.CONTENT_URI, values);
-        if (uriResult != null) {
-            Snackbar.make(scroll, "Word was added with ID: " + ContentUris.parseId(uriResult), Snackbar.LENGTH_SHORT).show();
-        } else {
-            Snackbar.make(scroll, "Word was not added", Snackbar.LENGTH_SHORT).show();
+        switch (INSERT_MODE) {
+            case 0:
+                Uri uriResult = getContentResolver().insert(LinoteEntry.CONTENT_URI, values);
+                if (uriResult != null) {
+                    Toast.makeText(this, getString(R.string.notation_added_msg) + ContentUris.parseId(uriResult), Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Snackbar.make(scroll, getString(R.string.notation_add_faild_msg), Snackbar.LENGTH_LONG).show();
+
+                }
+                break;
+            case 1:
+                int rowsUpdate = getContentResolver().update(mCurrentUri, values, null, null);
+                if (rowsUpdate > 0 ){
+                    Toast.makeText(this, getString(R.string.notation_updated_msg), Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    Snackbar.make(scroll, getString(R.string.notation_uptdate_faild), Snackbar.LENGTH_SHORT).show();
+
+                }
 
         }
 
@@ -241,25 +298,114 @@ public class AddNewWord extends AppCompatActivity implements LoaderManager.Loade
         return spinnerChoseArticle;
     }
 
-    private void setArticleSpinnerVisible() {
+    private boolean setArticleSpinnerVisible() {
         if (spinnerChosePos.getSelectedItemPosition() == LinoteEntry.POS_NOUN
                 && spinnerChoseLang.getSelectedItemPosition() == LinoteEntry.LANGUAGE_GERMAN) {
             mArticleSpinner.setVisibility(View.VISIBLE);
+            return true;
         } else {
             mArticleSpinner.setSelection(0);
             article = null;
             mArticleSpinner.setVisibility(View.GONE);
-
+            return false;
         }
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
+    /*
+    Helpe Method bevor Delete
+     */
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteWord(mCurrentUri);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /*
+    Helpe Method discarad Changes
+     */
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_dialog_msg);
+        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        return new CursorLoader(this,
+                mCurrentUri,
+                LinoteContract.LinoteEntry.PROJECTION_DETAILS,
+                null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        if (cursor == null || cursor.getCount() < 1) {
+            return;
+        }
+        if (cursor.moveToFirst()) {
+            spinnerChoseLang.setSelection(cursor.getInt(cursor.getColumnIndex(LinoteContract.LinoteEntry.COLUMN_NAME_LANGUAGE)));
+            inputWord.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_WORD)));
+            inputTranslation.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
+            pos = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH)));
+            article = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
+            inputDescription.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_DESCRIPTION)));
+            inputExamples.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES)));
+            inputCollocations.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS)));
+        }
+
+        if (pos.equals(getString(R.string.noun))) {
+            spinnerChosePos.setSelection(1);
+        } else if (pos.equals(getString(R.string.pronoun))) {
+            spinnerChosePos.setSelection(2);
+        } else if (pos.equals(getString(R.string.verb))) {
+            spinnerChosePos.setSelection(3);
+        } else if (pos.equals(getString(R.string.adverb))) {
+            spinnerChosePos.setSelection(4);
+        } else if (pos.equals(getString(R.string.adjective))) {
+            spinnerChosePos.setSelection(5);
+        } else if (pos.equals(getString(R.string.conjunction))) {
+            spinnerChosePos.setSelection(6);
+        } else if (pos.equals(getString(R.string.preposition))) {
+            spinnerChosePos.setSelection(7);
+        } else if (pos.equals(getString(R.string.interjection))) {
+            spinnerChosePos.setSelection(8);
+        } else {
+            spinnerChosePos.setSelection(0);
+        }
+
+        if (setArticleSpinnerVisible()) {
+            if (article.equals(getString(R.string.der))) {
+                mArticleSpinner.setSelection(1);
+            } else if (article.equals(getString(R.string.die))) {
+                mArticleSpinner.setSelection(2);
+            } else if (article.equals(getString(R.string.das))) {
+                mArticleSpinner.setSelection(3);
+            }
+        }
 
     }
 

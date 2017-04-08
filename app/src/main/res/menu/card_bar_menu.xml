@@ -4,9 +4,7 @@
     <item
         android:id="@+id/menu_item_google"
         android:title="@string/menu_item_sear_on_google"/>
-    <item
-        android:id="@+id/menu_item_wiki"
-        android:title="@string/menu_item_see_on_wiki"/>
+
     <item
         android:id="@+id/menu_item_abby"
         android:title="@string/menu_item_see_on_abby"/>

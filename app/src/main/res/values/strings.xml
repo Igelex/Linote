@@ -164,6 +164,16 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="edit_word_titel">Edit Word</string>
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep editing</string>
+    <string name="delete_succesfull_msg">Notation deleted</string>
+    <string name="delete_faild_msg">Error! Notation not deleted</string>
+    <string name="notation_added_msg">Notation added to your list</string>
+    <string name="notation_add_faild_msg">Error! Notation not added</string>
+    <string name="notation_updated_msg">Notation saved</string>
+    <string name="notation_uptdate_faild">Error! Notation not saved</string>
 
 
 </resources>

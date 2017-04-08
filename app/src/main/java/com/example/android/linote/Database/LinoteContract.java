@@ -45,14 +45,6 @@ public final class LinoteContract {
         public static final int POS_PREPOSITION  = 6;
         public static final int POS_INTERJECTION  = 7;
 
-        /*
-       Possible Values for the ARTICLE
-        */
-        public static final int ARTICLE_NO_ARTICLE  = 0;
-        public static final int ARTICLE_DER  = 1;
-        public static final int ARTICLE_DIE  = 2;
-        public static final int ARTICLE_DAS  = 3;
-
         /**
          * URI
          */
@@ -72,7 +64,7 @@ public final class LinoteContract {
         /**
          * Projections
          */
-        public static final String [] PROJECTION = {_ID, COLUMN_NAME_WORD, COLUMN_NAME_TRANSLATION,
+        public static final String [] PROJECTION = {_ID, COLUMN_NAME_LANGUAGE, COLUMN_NAME_WORD, COLUMN_NAME_TRANSLATION,
                                                 COLUMN_NAME_PARTOFSPEECH, COLUMN_NAME_ARTICLE};
         public static final String [] PROJECTION_DETAILS = {_ID, COLUMN_NAME_LANGUAGE, COLUMN_NAME_WORD, COLUMN_NAME_TRANSLATION,
                 COLUMN_NAME_PARTOFSPEECH, COLUMN_NAME_ARTICLE, COLUMN_NAME_DESCRIPTION, COLUMN_NAME_COLLOCATIONS, COLUMN_NAME_EXAMPLES};
@@ -80,11 +72,7 @@ public final class LinoteContract {
         /**
          * Selections
          */
-        public static final String SELECTION_GER_WORDS = COLUMN_NAME_LANGUAGE + " =?";
-        public static final String [] SELECTION_ARGS_GER_WORDS = {String.valueOf(LANGUAGE_GERMAN)};
 
-        public static final String SELECTION_ENG_WORDS = COLUMN_NAME_LANGUAGE + " =?";
-        public static final String [] SELECTION_ARGS_ENG_WORDS = {String.valueOf(LANGUAGE_ENGLISH)};
 
         /**
          * Sortorder

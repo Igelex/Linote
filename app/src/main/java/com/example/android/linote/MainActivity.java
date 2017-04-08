@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+        listView.setClickable(true);
+        listView.findFocus();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -48,6 +48,7 @@ public class WebActivity extends AppCompatActivity {
 
             public void onProgressChanged(WebView view, int progress) {
                 progressBar.setProgress(progress * 1);
+                progressBar.setSecondaryProgress(progress * 2);
                 if (progressBar.getProgress() == 100) {
                     progressBar.setVisibility(View.GONE);
                 }

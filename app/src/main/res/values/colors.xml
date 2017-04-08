@@ -14,4 +14,7 @@
     <color name="colorDetailsPrimary">#5a6abf</color>
     <color name="colorDetailPrimaryDark">#23408e</color>
     <color name="colorDetailAccent">#FF4081</color>
+
+    <!-- ProgresBar Color -->
+    <color name="colorProgresBar">#3affc1</color>
 </resources>
