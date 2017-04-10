@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorPrimary">#007769</color>
+    <color name="colorPrimaryDark">#004a3f</color>
     <color name="colorAccent">#FF4081</color>
     <color name="section_text_color">#FF4081</color>
 
     <!-- Editor Colors -->
     <color name="colorEditorPrimary">#767676</color>
     <color name="colorEditorPrimaryDark">#454545</color>
-    <color name="colorEditorAccent">#FF4081</color>
+    <color name="colorEditorAccent">#9f34e6</color>
 
     <!-- DetailsScreen Colors -->
     <color name="colorDetailsPrimary">#5a6abf</color>

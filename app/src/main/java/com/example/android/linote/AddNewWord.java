@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +28,12 @@ import android.widget.Toast;
 
 import com.example.android.linote.Database.LinoteContract;
 
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_NULL;
+import static android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS;
 import static com.example.android.linote.Database.LinoteContract.*;
+import static com.example.android.linote.R.string.spinnerlang_input_error_msg;
+import static com.example.android.linote.R.string.spinnerpos_input_error_msg;
 
 
 public class AddNewWord extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<Cursor> {
@@ -137,7 +143,9 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                saveWord();
+                if(checkUserInput() && validateUserInputWord() && validateUserInputTranslation()){
+                    saveWord();
+                }
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -199,7 +207,7 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
                 break;
             case 1:
                 int rowsUpdate = getContentResolver().update(mCurrentUri, values, null, null);
-                if (rowsUpdate > 0 ){
+                if (rowsUpdate > 0) {
                     Toast.makeText(this, getString(R.string.notation_updated_msg), Toast.LENGTH_LONG).show();
                     finish();
                 } else {
@@ -220,11 +228,6 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
         spinnerChosePos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-
-                if (selection.equals(getString(R.string.page_title_eng))) {
-                    Snackbar.make(view, "Item on Position :" + position + " ist Selected: " + selection, Snackbar.LENGTH_SHORT).show();
-                }
                 switch (position) {
                     case 0:
                         pos = getString(R.string.chose_pos);
@@ -298,15 +301,30 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
         return spinnerChoseArticle;
     }
 
+    /*
+    Set articleSpinner visible and convert first letter from @inputWord to Uppercase
+     */
     private boolean setArticleSpinnerVisible() {
         if (spinnerChosePos.getSelectedItemPosition() == LinoteEntry.POS_NOUN
                 && spinnerChoseLang.getSelectedItemPosition() == LinoteEntry.LANGUAGE_GERMAN) {
             mArticleSpinner.setVisibility(View.VISIBLE);
+            inputWord.setInputType(TYPE_TEXT_FLAG_CAP_WORDS);
+            if (!inputWord.getText().toString().trim().isEmpty()) {
+                String bufferInputString = inputWord.getText().toString().trim();
+                String upperString = bufferInputString.substring(0, 1).toUpperCase() + bufferInputString.substring(1);
+                inputWord.setText(upperString);
+            }
             return true;
         } else {
             mArticleSpinner.setSelection(0);
             article = null;
             mArticleSpinner.setVisibility(View.GONE);
+            if (!inputWord.getText().toString().trim().isEmpty()) {
+                inputWord.setInputType(TYPE_CLASS_TEXT);
+                String bufferInputString = inputWord.getText().toString().trim();
+                inputWord.setText(bufferInputString.toLowerCase());
+            }
+
             return false;
         }
     }
@@ -351,6 +369,51 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    /*
+    Validate User Input for Word and Translation
+     */
+    private boolean validateUserInputWord() {
+        TextInputLayout userInputWord = (TextInputLayout) findViewById(R.id.inputlayout_word);
+        if (inputWord.getText().toString().trim().isEmpty()) {
+            userInputWord = (TextInputLayout) findViewById(R.id.inputlayout_word);
+            userInputWord.setErrorEnabled(true);
+            userInputWord.setError(getString(R.string.user_input_word_erro_msg));
+            inputWord.setError(getString(R.string.required_input_erro_msg));
+            inputWord.requestFocus();
+            return false;
+        }
+        userInputWord.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validateUserInputTranslation() {
+        TextInputLayout userInputTranslation = (TextInputLayout) findViewById(R.id.inputlayout_word);
+        if (inputTranslation.getText().toString().trim().isEmpty()) {
+            userInputTranslation = (TextInputLayout) findViewById(R.id.inputlayout_translation);
+            userInputTranslation.setErrorEnabled(true);
+            userInputTranslation.setError(getString(R.string.user_input_translation_erro_msg));
+            inputTranslation.setError(getString(R.string.required_input_erro_msg));
+            inputTranslation.requestFocus();
+            return false;
+        }
+        userInputTranslation.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean checkUserInput() {
+        if (spinnerChoseLang.getSelectedItemPosition() == LinoteEntry.LANGUAGE_NO_LANGUAGE_SELECTED) {
+            Snackbar.make(scroll, getString(R.string.spinnerlang_input_error_msg), Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (spinnerChosePos.getSelectedItemPosition() == 0) {
+            Snackbar.make(scroll, getString(spinnerpos_input_error_msg), Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (setArticleSpinnerVisible() && mArticleSpinner.getSelectedItemPosition() == 0) {
+            Snackbar.make(scroll, getString(R.string.spinnerarticle_input_error_msg), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     @Override

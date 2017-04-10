@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -60,13 +59,18 @@ public class LinoteCursorAdapter extends CursorAdapter {
 
         final String intentString = defaultWord.getText().toString();
         final String wordWebUri = defaultWord.getText().toString();
+
+        TextView chosenLanguage = (TextView) view.findViewById(R.id.lang);
         String translationDirection = null;
         switch (language) {
             case LinoteContract.LinoteEntry.LANGUAGE_ENGLISH:
                 translationDirection = "en-ru";
+                chosenLanguage.setText(R.string.eng);
                 break;
             case LinoteContract.LinoteEntry.LANGUAGE_GERMAN:
                 translationDirection = "de-ru";
+                chosenLanguage.setText(R.string.ger);
+                break;
         }
 
         final String tr = translationDirection;
@@ -101,7 +105,6 @@ public class LinoteCursorAdapter extends CursorAdapter {
                 popup.inflate(R.menu.card_bar_menu);
                 setCustomPopupListener(wordWebUri, tr, intentString);
                 popup.show();
-                Snackbar.make(view, "Menu clicked: " + mCurrentUri, Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,7 +128,7 @@ public class LinoteCursorAdapter extends CursorAdapter {
         alertDialog.show();
     }
 
-    public void setCustomPopupListener(final String wordWebUri, final String translationDirection, final String intentString) {
+    private void setCustomPopupListener(final String wordWebUri, final String translationDirection, final String intentString) {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             Intent intent;
             @Override
@@ -143,7 +146,7 @@ public class LinoteCursorAdapter extends CursorAdapter {
                         break;
                     case R.id.menu_item_google:
                         Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-                        intent.putExtra(SearchManager.QUERY, wordWebUri.toLowerCase()); // query contains search string
+                        intent.putExtra(SearchManager.QUERY, wordWebUri);
                         mContext.startActivity(intent);
                         if (intent.resolveActivity(mContext.getPackageManager()) != null) {
                             mContext.startActivity(intent);

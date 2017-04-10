@@ -9,30 +9,19 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.linote.Database.LinoteContract;
 
-import static android.R.id.edit;
-import static android.provider.Contacts.SettingsColumns.KEY;
 
 public class WordDetails extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-
-    private boolean mWordHasChanged = false;
     private Uri mCurrentUri;
     private String wordWebUri, intentString, translationDirection;
     private TextView word, translation, details, description, examples, collocations;
-
-    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            mWordHasChanged = true;
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +31,16 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
         Intent intent = getIntent();
         mCurrentUri = intent.getData();
 
-        getLoaderManager().initLoader(0, null, this);
+        if (mCurrentUri != null) {
+            try {
+                getLoaderManager().initLoader(0, null, this);
+            } catch (Exception e) {
+                Log.e("Details: ", "Error by initLoader", e);
+            }
+        } else {
+            Toast.makeText(this, "Error, no data found", Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         word = (TextView) findViewById(R.id.details_default_word);
         translation = (TextView) findViewById(R.id.details_translation);

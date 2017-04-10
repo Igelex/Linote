@@ -26,14 +26,26 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp" />
 
-        <EditText
-            android:id="@+id/input_word"
-            style="@style/inputs"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/word"
-            android:maxLines="1" />
+            android:layout_height="match_parent"
+            android:id="@+id/inputlayout_word">
+
+            <EditText
+                android:id="@+id/input_word"
+                style="@style/inputs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/word"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/inputlayout_translation">
 
         <EditText
             android:id="@+id/input_translation"
@@ -44,6 +56,8 @@
             android:hint="@string/translation"
             android:inputType="textMultiLine"
             android:maxLines="5" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/desc_details"

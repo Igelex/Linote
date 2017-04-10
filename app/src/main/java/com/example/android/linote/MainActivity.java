@@ -6,14 +6,13 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.content.CursorLoader;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.android.linote.Database.LinoteContract;
 
@@ -21,14 +20,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static LinoteCursorAdapter mAdapter;
     private static final int LOADER_INDEX = 0;
+    private ListView listView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        mAdapter = new LinoteCursorAdapter(this,null);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar_main);
+        listView = (ListView) findViewById(R.id.list_view);
+        mAdapter = new LinoteCursorAdapter(this, null);
         listView.setAdapter(mAdapter);
         listView.setEmptyView(findViewById(R.id.empty_view_container));
 
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, WordDetails.class);
                 intent.setData(ContentUris.withAppendedId(LinoteContract.LinoteEntry.CONTENT_URI, l));
-                if (intent.resolveActivity(getPackageManager()) != null){
+                if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
             }
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        progressBar.setVisibility(View.VISIBLE);
         return new CursorLoader(this,
                 LinoteContract.LinoteEntry.CONTENT_URI,
                 LinoteContract.LinoteEntry.PROJECTION,
@@ -69,7 +72,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        mAdapter.swapCursor(cursor);
+        progressBar.setVisibility(View.GONE);
+        if (cursor == null) {
+            listView.setEmptyView(findViewById(R.id.empty_view_container));
+        } else {
+            mAdapter.swapCursor(cursor);
+        }
 
     }
 
