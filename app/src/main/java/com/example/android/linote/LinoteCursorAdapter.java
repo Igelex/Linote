@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -27,6 +29,8 @@ public class LinoteCursorAdapter extends CursorAdapter {
 
     private Context mContext;
     private PopupMenu popup;
+    private Animation anim;
+    //private View mCurrentview;
 
     public LinoteCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);
@@ -40,6 +44,9 @@ public class LinoteCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, final Context context, final Cursor cursor) {
+
+        //mCurrentview = view;
+        anim = AnimationUtils.loadAnimation(mContext, R.anim.myanim);
 
         TextView defaultWord = (TextView) view.findViewById(R.id.default_word);
         TextView translation = (TextView) view.findViewById(R.id.translation);
@@ -107,6 +114,8 @@ public class LinoteCursorAdapter extends CursorAdapter {
                 popup.show();
             }
         });
+
+        view.startAnimation(anim);
     }
 
     private void showDeleteConfirmationDialog(final Uri uri) {
@@ -114,6 +123,8 @@ public class LinoteCursorAdapter extends CursorAdapter {
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                /*anim = AnimationUtils.loadAnimation(mContext, R.anim.delete_anim);
+                mCurrentview.startAnimation(anim);*/
                 mContext.getContentResolver().delete(uri, null, null);
             }
         });

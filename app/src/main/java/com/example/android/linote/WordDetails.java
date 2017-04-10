@@ -20,7 +20,7 @@ import com.example.android.linote.Database.LinoteContract;
 
 public class WordDetails extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     private Uri mCurrentUri;
-    private String wordWebUri, intentString, translationDirection;
+    private String wordWebUri, translationDirection;
     private TextView word, translation, details, description, examples, collocations;
 
     @Override
@@ -28,8 +28,7 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_details);
 
-        Intent intent = getIntent();
-        mCurrentUri = intent.getData();
+        mCurrentUri = getIntent().getData();
 
         if (mCurrentUri != null) {
             try {
@@ -39,7 +38,6 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
             }
         } else {
             Toast.makeText(this, "Error, no data found", Toast.LENGTH_LONG).show();
-            finish();
         }
 
         word = (TextView) findViewById(R.id.details_default_word);
@@ -60,9 +58,10 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
                         + "/" + wordWebUri);
                 Intent intent = new Intent(WordDetails.this, WebActivity.class);
                 intent.setData(abbyUri);
-                intent.putExtra("title", intentString);
+                intent.putExtra("title", wordWebUri);
+                intent.putExtra("backUri", mCurrentUri.toString());
                 if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
                 }
             }
         });
@@ -78,6 +77,22 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){
+            Toast.makeText(this, "Error, invalid backUri", Toast.LENGTH_LONG).show();
+            finish();
+        } else {
+            mCurrentUri = data.getData();
+            try {
+                getLoaderManager().initLoader(0, null, this);
+            } catch (Exception e) {
+                Log.e("Details: ", "Error by initLoader", e);
+            }
+        }
     }
 
     @Override
@@ -104,7 +119,9 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
             String examp = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES)));
             String colloc = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS)));
 
-            intentString = word.getText().toString();
+            wordWebUri = word.getText().toString();
+            setTitle(wordWebUri);
+
             switch (language) {
                 case LinoteContract.LinoteEntry.LANGUAGE_ENGLISH:
                     translationDirection = "en-ru";
@@ -112,9 +129,6 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
                 case LinoteContract.LinoteEntry.LANGUAGE_GERMAN:
                     translationDirection = "de-ru";
             }
-
-            wordWebUri = word.getText().toString();
-            setTitle(word.getText().toString());
 
             if (desc.trim().isEmpty()) {
                 TextView sectionDesc = (TextView) findViewById(R.id.details_selection_desc);

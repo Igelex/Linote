@@ -47,6 +47,12 @@
         <activity android:name=".WebActivity"
             android:parentActivityName=".WordDetails"
             android:theme="@style/EditorTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
+                <data android:scheme="http"></data>
+                <data android:scheme="https"></data>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

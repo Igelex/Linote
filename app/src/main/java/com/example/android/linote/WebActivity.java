@@ -3,9 +3,11 @@ package com.example.android.linote;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebChromeClient;
@@ -21,6 +23,7 @@ public class WebActivity extends AppCompatActivity {
 
     private static WebView myWebView;
     private ProgressBar progressBar;
+    private Uri mBackUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +32,13 @@ public class WebActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar_line);
 
         Intent intent = getIntent();
-        Uri mCurrentUri = intent.getData();
+        Uri mCurrentUri = getIntent().getData();
+        if(intent.hasExtra("backUri")) {
+            mBackUri = Uri.parse(intent.getStringExtra("backUri"));
+        }
 
         setTitle(mCurrentUri.toString());
+
 
         myWebView = (WebView) findViewById(webview);
         WebSettings webSettings = myWebView.getSettings();
@@ -57,6 +64,23 @@ public class WebActivity extends AppCompatActivity {
 
 
         myWebView.loadUrl(mCurrentUri.toString());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (mBackUri != null){
+                    Intent backIntent = new Intent(this, WordDetails.class);
+                    backIntent.setData(mBackUri);
+                    startActivity(backIntent);
+                    return true;
+                }
+                NavUtils.navigateUpFromSameTask(WebActivity.this);
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
