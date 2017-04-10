@@ -31,22 +31,22 @@
                 style="@style/card_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
                 android:maxLines="1"
                 android:text="Default word"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textSize="30sp"
-                android:layout_marginRight="40dp"/>
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/lang"
+                style="@style/card_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/eng"
-                android:textAllCaps="true"
-                style="@style/card_textview"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16dp"
-                android:textColor="#ababab"/>
+                android:text="@string/eng"
+                android:textAllCaps="true"
+                android:textColor="#ababab" />
 
         </RelativeLayout>
 

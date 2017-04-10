@@ -13,8 +13,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.android.linote.Database.LinoteContract;
+
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -30,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar_main);
         listView = (ListView) findViewById(R.id.list_view);
+
+        View view = getLayoutInflater().inflate(R.layout.list_footer, null);
+        listView.addFooterView(view);
+
         mAdapter = new LinoteCursorAdapter(this, null);
         listView.setAdapter(mAdapter);
         listView.setEmptyView(findViewById(R.id.empty_view_container));
@@ -44,9 +51,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             }
         });
-
-        listView.setClickable(true);
-        listView.findFocus();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
