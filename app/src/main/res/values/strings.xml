@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Linote</string>
 
-    <!-- Add New Word Activity lable -->
-    <string name="add_new_word_activity_lable">Add new word</string>
-
     <!-- Title of the Page with English Words  -->
     <string name="page_title_eng">English</string>
 
@@ -12,8 +9,6 @@
 
     <!-- Card Popup Menu Item: Search on Google-->
     <string name="menu_item_sear_on_google">Search on Google</string>
-    <!-- Card Popup Menu Item: See on Wiki-->
-    <string name="menu_item_see_on_wiki">See on Wiki</string>
     <!-- Card Popup Menu Item: See on Abby Lingvo Live-->
     <string name="menu_item_see_on_abby">See on Abby Lingvo Live</string>
 
@@ -23,27 +18,26 @@
 
     <!-- String-Array for Chose_language Spinner-->
     <string name="chose_lang">Chose language</string>
-    <string name="details">Details</string>
-    <string name="examples">Examples</string>
     <string-array name="chose_lang_spinner">
         <item>@string/chose_lang</item>
         <item>@string/page_title_eng</item>
         <item>@string/page_title_ger</item>
     </string-array>
 
+    <string name="details">Details</string>
+    <string name="examples">Examples</string>
+
     <!-- Parts of Spech Strings for Spinner -->
     <string name="chose_pos">Part of Speech</string>
     <string name="noun">Noun</string>
-    <string name="pronoun">Pronoun</string>
-    <string name="verb">Verb</string>
-    <string name="adverb">Adverb</string>
-    <string name="adjective">Adjective</string>
-    <string name="conjunction">Conjunction</string>
-    <string name="preposition">Preposition</string>
-    <string name="interjection">Interjecton</string>
-    <string name="word">Word</string>
-    <string name="translation">Translation</string>
-    <string name="collocations">Collocations</string>
+    <string name="pronoun">pronoun</string>
+    <string name="verb">verb</string>
+    <string name="adverb">adverb</string>
+    <string name="adjective">adjective</string>
+    <string name="conjunction">conjunction</string>
+    <string name="preposition">preposition</string>
+    <string name="interjection">interjecton</string>
+
     <string-array name="chose_pos_spinner">
         <item>@string/chose_pos</item>
         <item>@string/noun</item>
@@ -56,27 +50,35 @@
         <item>@string/interjection</item>
     </string-array>
 
-    <!-- Articles Strings for Spinner -->
-    <string name="chose_article">Chose article</string>
-    <string name="der">Der</string>
-    <string name="die">Die</string>
-    <string name="das">Das</string>
+    <!-- Sections String of Notation-Detail view -->
+    <string name="word">Word</string>
+    <string name="translation">Translation</string>
+    <string name="collocations">Collocations</string>
     <string name="description">Description</string>
-    <string name="delete_dialog_msg">Delete Word?</string>
-    <string name="delete">Delete</string>
-    <string name="cancel">Cancel</string>
-    <string name="save_menu_item">Save</string>
-    <string name="delete_menu_item">Delete</string>
+
+    <!-- Articles Strings for Article-Spinner -->
+    <string name="chose_article">Chose article</string>
+    <string name="der" translatable="false">der</string>
+    <string name="die" translatable="false">die</string>
+    <string name="das" translatable="false">das</string>
     <string-array name="chose_article_spinner">
         <item>@string/chose_article</item>
         <item>@string/der</item>
         <item>@string/die</item>
         <item>@string/das</item>
     </string-array>
-    <string name="title_activity_details">Word</string>
+
+    <!-- Delete Dialog Strings -->
+    <string name="delete_dialog_msg">Delete Notation?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="save_menu_item">Save</string>
+    <string name="delete_menu_item">Delete</string>
 
     <string name="action_settings">Settings</string>
-    <string name="edit_word_titel">Edit Word</string>
+
+    <!-- Titel of the Edit Notation Activity -->
+    <string name="edit_word_titel">Edit Notation</string>
 
     <!--Dialog Strings-->
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
@@ -88,18 +90,22 @@
     <string name="notation_add_faild_msg">Error! Notation not added</string>
     <string name="notation_updated_msg">Notation saved</string>
     <string name="notation_uptdate_faild">Error! Notation not saved</string>
+
+    <!-- Emty state of the List Strings -->
     <string name="your_list_is_empty">Your List is empty</string>
     <string name="start_with_new_notation">Start with adding new Notation</string>
 
     <!--Chosen Lang Strings-->
-    <string name="eng">EN</string>
-    <string name="ger">DE</string>
+    <string name="eng" translatable="false">EN</string>
+    <string name="ger" translatable="false">DE</string>
+
+    <!-- User input validation Strings -->
     <string name="user_input_word_erro_msg">Please enter a Word</string>
     <string name="required_input_erro_msg">Valid Input required</string>
     <string name="user_input_translation_erro_msg">Please enter a Translation</string>
     <string name="spinnerpos_input_error_msg">Please chose a Part of speech</string>
     <string name="spinnerlang_input_error_msg">Please chose a Language</string>
-    <string name="spinnerarticle_input_error_msg">Please chose Article</string>
+    <string name="spinnerarticle_input_error_msg">Please chose an Article</string>
 
 
 </resources>
