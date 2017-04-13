@@ -27,7 +27,7 @@
     <string name="details">Details</string>
     <string name="examples">Examples</string>
 
-    <!-- Parts of Spech Strings for Spinner -->
+    <!-- Parts of Speech Strings for Spinner -->
     <string name="chose_pos">Part of Speech</string>
     <string name="noun">Noun</string>
     <string name="pronoun">pronoun</string>
@@ -84,14 +84,14 @@
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
     <string name="discard">Discard</string>
     <string name="keep_editing">Keep editing</string>
-    <string name="delete_succesfull_msg">Notation deleted</string>
-    <string name="delete_faild_msg">Error! Notation not deleted</string>
+    <string name="delete_successful_msg">Notation deleted</string>
+    <string name="delete_failed_msg">Error! Notation not deleted</string>
     <string name="notation_added_msg">Notation added to your list</string>
-    <string name="notation_add_faild_msg">Error! Notation not added</string>
+    <string name="notation_add_failed_msg">Error! Notation not added</string>
     <string name="notation_updated_msg">Notation saved</string>
-    <string name="notation_uptdate_faild">Error! Notation not saved</string>
+    <string name="notation_update_failed">Error! Notation not saved</string>
 
-    <!-- Emty state of the List Strings -->
+    <!-- Empty state of the List Strings -->
     <string name="your_list_is_empty">Your List is empty</string>
     <string name="start_with_new_notation">Start with adding new Notation</string>
 
@@ -100,9 +100,9 @@
     <string name="ger" translatable="false">DE</string>
 
     <!-- User input validation Strings -->
-    <string name="user_input_word_erro_msg">Please enter a Word</string>
-    <string name="required_input_erro_msg">Valid Input required</string>
-    <string name="user_input_translation_erro_msg">Please enter a Translation</string>
+    <string name="user_input_word_error_msg">Please enter a Word</string>
+    <string name="required_input_error_msg">Valid Input required</string>
+    <string name="user_input_translation_error_msg">Please enter a Translation</string>
     <string name="spinnerpos_input_error_msg">Please chose a Part of speech</string>
     <string name="spinnerlang_input_error_msg">Please chose a Language</string>
     <string name="spinnerarticle_input_error_msg">Please chose an Article</string>

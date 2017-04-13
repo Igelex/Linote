@@ -10,15 +10,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.android.linote.R;
 
-import static android.R.attr.id;
 import static com.example.android.linote.Database.LinoteContract.*;
 
 /**
@@ -111,10 +108,10 @@ public class LinoteProvider extends ContentProvider {
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 int rowsDeleted = database.delete(LinoteEntry.TABLE_NAME, selection, selectionArgs);
                 if (rowsDeleted > 0) {
-                    Toast.makeText(getContext(), getContext().getString(R.string.delete_succesfull_msg), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getString(R.string.delete_successful_msg), Toast.LENGTH_SHORT).show();
                     getContext().getContentResolver().notifyChange(uri, null);
                 } else {
-                    Toast.makeText(getContext(), getContext().getString(R.string.delete_faild_msg), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getContext().getString(R.string.delete_failed_msg), Toast.LENGTH_SHORT).show();
                 }
                 return rowsDeleted;
             default:

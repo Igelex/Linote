@@ -15,7 +15,7 @@ public final class LinoteContract {
     /* Inner class that defines the table contents */
     public static class LinoteEntry implements BaseColumns{
         public static final String TABLE_NAME = "words";
-        public static final String _ID= BaseColumns._ID;
+        public static final String _ID = BaseColumns._ID;
         public static final String COLUMN_NAME_LANGUAGE = "language";
         public static final String COLUMN_NAME_WORD = "word";
         public static final String COLUMN_NAME_TRANSLATION = "translation";
@@ -31,6 +31,15 @@ public final class LinoteContract {
         public static final int LANGUAGE_NO_LANGUAGE_SELECTED  = 0;
         public static final int LANGUAGE_ENGLISH  = 1;
         public static final int LANGUAGE_GERMAN  = 2;
+
+         /*
+        Possible Values for the Article
+         */
+        public static final int ARTICLE_NO_ARTICLE_SELECTED = 0;
+        public static final int ARTICLE_DER= 1;
+        public static final int ARTICLE_DIE= 1;
+        public static final int ARTICLE_DAS= 1;
+
 
         /*
         Possible Values for the Part of Speech

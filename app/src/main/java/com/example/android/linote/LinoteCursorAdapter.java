@@ -59,32 +59,79 @@ public class LinoteCursorAdapter extends CursorAdapter {
         int language = (cursor.getInt(cursor.getColumnIndex(LinoteContract.LinoteEntry.COLUMN_NAME_LANGUAGE)));
         defaultWord.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_WORD)));
         translation.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
-        String pos = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH)));
-        String article = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
+        int pos = (cursor.getInt(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH)));
+        int article = (cursor.getInt(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
         final Uri mCurrentUri = ContentUris.withAppendedId(LinoteContract.LinoteEntry.CONTENT_URI,
                 cursor.getInt(cursor.getColumnIndex(LinoteContract.LinoteEntry._ID)));
 
         final String intentString = defaultWord.getText().toString();
         final String wordWebUri = defaultWord.getText().toString();
 
-        TextView chosenLanguage = (TextView) view.findViewById(R.id.lang);
+        TextView languageView = (TextView) view.findViewById(R.id.lang);
         String translationDirection = null;
         switch (language) {
             case LinoteContract.LinoteEntry.LANGUAGE_ENGLISH:
                 translationDirection = "en-ru";
-                chosenLanguage.setText(R.string.eng);
+                languageView.setText(R.string.eng);
                 break;
             case LinoteContract.LinoteEntry.LANGUAGE_GERMAN:
                 translationDirection = "de-ru";
-                chosenLanguage.setText(R.string.ger);
+                languageView.setText(R.string.ger);
+                break;
+        }
+
+        String articleString = null;
+        switch (article) {
+            case 0:
+                articleString = null;
+                break;
+            case 1:
+                articleString = mContext.getString(R.string.der);
+                break;
+            case 2:
+                articleString = mContext.getString(R.string.die);
+                break;
+            case 3:
+                articleString = mContext.getString(R.string.das);
+                break;
+        }
+
+        String posString = null;
+        switch (pos) {
+            case 0:
+                posString = mContext.getString(R.string.chose_pos);
+                break;
+            case 1:
+                posString = mContext.getString(R.string.noun);
+                break;
+            case 2:
+                posString = mContext.getString(R.string.pronoun);
+                break;
+            case 3:
+                posString = mContext.getString(R.string.verb);
+                break;
+            case 4:
+                posString = mContext.getString(R.string.adverb);
+                break;
+            case 5:
+                posString = mContext.getString(R.string.adjective);
+                break;
+            case 6:
+                posString = mContext.getString(R.string.conjunction);
+                break;
+            case 7:
+                posString = mContext.getString(R.string.preposition);
+                break;
+            case 8:
+                posString = mContext.getString(R.string.interjection);
                 break;
         }
 
         final String tr = translationDirection;
-        if (article == null) {
-            details.setText(pos);
+        if (articleString == null) {
+            details.setText(posString);
         } else {
-            details.setText(pos + ", " + article);
+            details.setText(posString + ", " + articleString);
         }
 
         deleteButton.setOnClickListener(new View.OnClickListener() {

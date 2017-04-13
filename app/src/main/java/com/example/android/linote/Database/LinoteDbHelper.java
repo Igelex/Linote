@@ -15,7 +15,7 @@ import static com.example.android.linote.Database.LinoteContract.*;
 public class LinoteDbHelper extends SQLiteOpenHelper {
 
     public static final String LOG_TAG = LinoteDbHelper.class.getSimpleName();
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "linote.db";
 
     private static final String SQL_CREATE_ENTRIES =
@@ -24,8 +24,8 @@ public class LinoteDbHelper extends SQLiteOpenHelper {
             + LinoteEntry.COLUMN_NAME_LANGUAGE + " INTEGER NOT NULL, "
             + LinoteEntry.COLUMN_NAME_WORD + " TEXT NOT NULL, "
             + LinoteEntry.COLUMN_NAME_TRANSLATION + " TEXT NOT NULL, "
-            + LinoteEntry.COLUMN_NAME_PARTOFSPEECH + " TEXT NOT NULL, "
-            + LinoteEntry.COLUMN_NAME_ARTICLE + " TEXT, "
+            + LinoteEntry.COLUMN_NAME_PARTOFSPEECH + " INTEGER NOT NULL, "
+            + LinoteEntry.COLUMN_NAME_ARTICLE + " INTEGER, "
             + LinoteEntry.COLUMN_NAME_DESCRIPTION + " TEXT, "
             + LinoteEntry.COLUMN_NAME_COLLOCATIONS + " TEXT, "
             + LinoteEntry.COLUMN_NAME_EXAMPLES + " TEXT );";
@@ -45,7 +45,13 @@ public class LinoteDbHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int inewVersion) {
+        switch (oldVersion){
+            case 1: db.execSQL();
+                break;
+            default:
+                throw new IllegalStateException("Cannt upgrade the Database");
+        }
 
     }
 }

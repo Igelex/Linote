@@ -14,13 +14,10 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -32,10 +29,8 @@ import android.widget.Toast;
 import com.example.android.linote.Database.LinoteContract;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
-import static android.text.InputType.TYPE_NULL;
 import static android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS;
 import static com.example.android.linote.Database.LinoteContract.*;
-import static com.example.android.linote.R.string.spinnerlang_input_error_msg;
 import static com.example.android.linote.R.string.spinnerpos_input_error_msg;
 
 
@@ -48,8 +43,8 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
     private EditText inputCollocations;
     private EditText inputExamples;
     private int lang;
-    private String pos;
-    private String article;
+    private int pos;
+    private int article;
     private Spinner spinnerChosePos;
     private Spinner mArticleSpinner;
     private Spinner spinnerChoseLang;
@@ -204,7 +199,7 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
                     Toast.makeText(this, getString(R.string.notation_added_msg) + ContentUris.parseId(uriResult), Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Snackbar.make(scroll, getString(R.string.notation_add_faild_msg), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(scroll, getString(R.string.notation_add_failed_msg), Snackbar.LENGTH_LONG).show();
 
                 }
                 break;
@@ -214,7 +209,7 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
                     Toast.makeText(this, getString(R.string.notation_updated_msg), Toast.LENGTH_LONG).show();
                     finish();
                 } else {
-                    Snackbar.make(scroll, getString(R.string.notation_uptdate_faild), Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(scroll, getString(R.string.notation_update_failed), Snackbar.LENGTH_SHORT).show();
 
                 }
 
@@ -233,32 +228,32 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        pos = getString(R.string.chose_pos);
+                        pos = LinoteEntry.POS_NO_POS_SELECTED;
                         break;
                     case 1:
-                        pos = getString(R.string.noun);
+                        pos = LinoteEntry.POS_NOUN;
                         break;
                     case 2:
-                        pos = getString(R.string.pronoun);
+                        pos = LinoteEntry.POS_PRONOUN;
                         break;
                     case 3:
-                        pos = getString(R.string.verb);
+                        pos = LinoteEntry.POS_VERB;
                         break;
                     case 4:
-                        pos = getString(R.string.adverb);
+                        pos = LinoteEntry.POS_ADVERB;
                         break;
                     case 5:
-                        pos = getString(R.string.adjective);
+                        pos = LinoteEntry.POS_ADJECTIVE;
                         break;
                     case 6:
-                        pos = getString(R.string.conjunction);
+                        pos = LinoteEntry.POS_CONJUNCTIVE;
                         break;
                     case 7:
-                        pos = getString(R.string.preposition);
+                        pos = LinoteEntry.POS_PREPOSITION;
                         ;
                         break;
                     case 8:
-                        pos = getString(R.string.interjection);
+                        pos = LinoteEntry.POS_INTERJECTION;
                         ;
                         break;
                 }
@@ -283,16 +278,16 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        article = null;
+                        article = LinoteEntry.ARTICLE_NO_ARTICLE_SELECTED;
                         break;
                     case 1:
-                        article = getString(R.string.der);
+                        article = LinoteEntry.ARTICLE_DER;
                         break;
                     case 2:
-                        article = getString(R.string.die);
+                        article = LinoteEntry.ARTICLE_DIE;
                         break;
                     case 3:
-                        article = getString(R.string.das);
+                        article = LinoteEntry.ARTICLE_DAS;
                         break;
                 }
             }
@@ -320,7 +315,7 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
             return true;
         } else {
             mArticleSpinner.setSelection(0);
-            article = null;
+            article = 0;
             mArticleSpinner.setVisibility(View.GONE);
             if (!inputWord.getText().toString().trim().isEmpty()) {
                 inputWord.setInputType(TYPE_CLASS_TEXT);
@@ -382,8 +377,8 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
         if (inputWord.getText().toString().trim().isEmpty()) {
             userInputWord = (TextInputLayout) findViewById(R.id.inputlayout_word);
             userInputWord.setErrorEnabled(true);
-            userInputWord.setError(getString(R.string.user_input_word_erro_msg));
-            inputWord.setError(getString(R.string.required_input_erro_msg));
+            userInputWord.setError(getString(R.string.user_input_word_error_msg));
+            inputWord.setError(getString(R.string.required_input_error_msg));
             inputWord.requestFocus();
             return false;
         }
@@ -396,8 +391,8 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
         if (inputTranslation.getText().toString().trim().isEmpty()) {
             userInputTranslation = (TextInputLayout) findViewById(R.id.inputlayout_translation);
             userInputTranslation.setErrorEnabled(true);
-            userInputTranslation.setError(getString(R.string.user_input_translation_erro_msg));
-            inputTranslation.setError(getString(R.string.required_input_erro_msg));
+            userInputTranslation.setError(getString(R.string.user_input_translation_error_msg));
+            inputTranslation.setError(getString(R.string.required_input_error_msg));
             inputTranslation.requestFocus();
             return false;
         }
@@ -436,41 +431,56 @@ public class AddNewWord extends AppCompatActivity implements android.app.LoaderM
             spinnerChoseLang.setSelection(cursor.getInt(cursor.getColumnIndex(LinoteContract.LinoteEntry.COLUMN_NAME_LANGUAGE)));
             inputWord.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_WORD)));
             inputTranslation.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
-            pos = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH)));
-            article = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
+            pos = (cursor.getInt(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH)));
+            article = (cursor.getInt(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
             inputDescription.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_DESCRIPTION)));
             inputExamples.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES)));
             inputCollocations.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS)));
         }
 
-        if (pos.equals(getString(R.string.noun))) {
-            spinnerChosePos.setSelection(1);
-        } else if (pos.equals(getString(R.string.pronoun))) {
-            spinnerChosePos.setSelection(2);
-        } else if (pos.equals(getString(R.string.verb))) {
-            spinnerChosePos.setSelection(3);
-        } else if (pos.equals(getString(R.string.adverb))) {
-            spinnerChosePos.setSelection(4);
-        } else if (pos.equals(getString(R.string.adjective))) {
-            spinnerChosePos.setSelection(5);
-        } else if (pos.equals(getString(R.string.conjunction))) {
-            spinnerChosePos.setSelection(6);
-        } else if (pos.equals(getString(R.string.preposition))) {
-            spinnerChosePos.setSelection(7);
-        } else if (pos.equals(getString(R.string.interjection))) {
-            spinnerChosePos.setSelection(8);
-        } else {
-            spinnerChosePos.setSelection(0);
+        switch (pos) {
+            case 0:
+                spinnerChosePos.setSelection(0);
+                break;
+            case 1:
+                spinnerChosePos.setSelection(1);
+                break;
+            case 2:
+                spinnerChosePos.setSelection(2);
+                break;
+            case 3:
+                spinnerChosePos.setSelection(3);
+                break;
+            case 4:
+                spinnerChosePos.setSelection(4);
+                break;
+            case 5:
+                spinnerChosePos.setSelection(5);
+                break;
+            case 6:
+                spinnerChosePos.setSelection(6);
+                break;
+            case 7:
+                spinnerChosePos.setSelection(7);
+                break;
+            case 8:
+                spinnerChosePos.setSelection(8);
+                break;
         }
 
-        if (setArticleSpinnerVisible()) {
-            if (article.equals(getString(R.string.der))) {
+        switch (article) {
+            case 0:
+                mArticleSpinner.setSelection(0);
+                break;
+            case 1:
                 mArticleSpinner.setSelection(1);
-            } else if (article.equals(getString(R.string.die))) {
+                break;
+            case 2:
                 mArticleSpinner.setSelection(2);
-            } else if (article.equals(getString(R.string.das))) {
+                break;
+            case 3:
                 mArticleSpinner.setSelection(3);
-            }
+                break;
         }
     }
 
