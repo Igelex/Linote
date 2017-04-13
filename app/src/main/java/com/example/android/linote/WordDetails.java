@@ -80,22 +80,6 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(data == null){
-            Toast.makeText(this, "Error, invalid backUri", Toast.LENGTH_LONG).show();
-            finish();
-        } else {
-            mCurrentUri = data.getData();
-            try {
-                getLoaderManager().initLoader(0, null, this);
-            } catch (Exception e) {
-                Log.e("Details: ", "Error by initLoader", e);
-            }
-        }
-    }
-
-    @Override
     public Loader onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
                 mCurrentUri,
@@ -113,8 +97,8 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
             int language = (cursor.getInt(cursor.getColumnIndex(LinoteContract.LinoteEntry.COLUMN_NAME_LANGUAGE)));
             word.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_WORD)));
             translation.setText(cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_TRANSLATION)));
-            String pos = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH)));
-            String article = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
+            int pos = (cursor.getInt(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_PARTOFSPEECH)));
+            int article = (cursor.getInt(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_ARTICLE)));
             String desc = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_DESCRIPTION)));
             String examp = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_EXAMPLES)));
             String colloc = (cursor.getString(cursor.getColumnIndexOrThrow(LinoteContract.LinoteEntry.COLUMN_NAME_COLLOCATIONS)));
@@ -128,6 +112,59 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
                     break;
                 case LinoteContract.LinoteEntry.LANGUAGE_GERMAN:
                     translationDirection = "de-ru";
+            }
+
+            String posString = null;
+            switch (pos) {
+                case 0:
+                    posString = getString(R.string.chose_pos);
+                    break;
+                case 1:
+                    posString = getString(R.string.noun);
+                    break;
+                case 2:
+                    posString = getString(R.string.pronoun);
+                    break;
+                case 3:
+                    posString = getString(R.string.verb);
+                    break;
+                case 4:
+                    posString = getString(R.string.adverb);
+                    break;
+                case 5:
+                    posString = getString(R.string.adjective);
+                    break;
+                case 6:
+                    posString = getString(R.string.conjunction);
+                    break;
+                case 7:
+                    posString = getString(R.string.preposition);
+                    break;
+                case 8:
+                    posString = getString(R.string.interjection);
+                    break;
+            }
+
+            String articleString = null;
+            switch (article) {
+                case 0:
+                    articleString = null;
+                    break;
+                case 1:
+                    articleString = getString(R.string.der);
+                    break;
+                case 2:
+                    articleString = getString(R.string.die);
+                    break;
+                case 3:
+                    articleString = getString(R.string.das);
+                    break;
+            }
+
+            if (articleString == null) {
+                details.setText(posString);
+            } else {
+                details.setText(posString + ", " + articleString);
             }
 
             if (desc.trim().isEmpty()) {
@@ -151,11 +188,6 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
                 sectionColloc.setVisibility(View.GONE);
             } else {
                 collocations.setText(colloc);
-            }
-            if (article == null) {
-                details.setText(pos);
-            } else {
-                details.setText(pos + ", " + article);
             }
         }
     }
