@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarStyle">@style/appbar_elevation</item>
-        <item name="android:windowContentOverlay">@null</item>
+
     </style>
 
     <style name="appbar_elevation" parent="style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
@@ -21,6 +21,16 @@
         <item name="colorPrimaryDark">@color/colorEditorPrimaryDark</item>
         <item name="colorAccent">@color/colorEditorAccent</item>
     </style>
+
+    <!-- WebActivity Theme -->
+    <style name="WebActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorEditorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorEditorPrimaryDark</item>
+        <item name="colorAccent">@color/colorEditorAccent</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
 
     <!-- Theme of the Details-Screen -->
     <style name="Details_Screen" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -72,11 +82,6 @@
         <item name="android:textColor">@color/section_text_color</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -86,7 +91,7 @@
         <item name="colorAccent">@color/colorProgresBar</item>
     </style>
 
-    <!-- Emty View textstyle -->
+    <!-- Empty View textstyle -->
     <style name="empty_text_style">
         <item name="android:textColor">@color/colorEmptyText</item>
         <item name="android:textSize">18sp</item>
