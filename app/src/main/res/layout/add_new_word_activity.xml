@@ -86,6 +86,11 @@
 
         </LinearLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/inputlayout_description">
+
         <EditText
             android:id="@+id/input_description"
             style="@style/inputs"
@@ -96,6 +101,8 @@
             android:inputType="textMultiLine"
             android:maxLines="5" />
 
+        </android.support.design.widget.TextInputLayout>
+
         <TextView
             android:id="@+id/desc_examples"
             android:layout_width="match_parent"
@@ -104,6 +111,11 @@
             android:layout_marginTop="16dp"
             android:text="@string/examples"
             style="@style/section_text"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/inputlayout_collocations">
 
         <EditText
             android:id="@+id/input_collocations"
@@ -115,6 +127,13 @@
             android:inputType="textMultiLine"
             android:maxLines="5" />
 
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/inputlayout_examples">
+
         <EditText
             android:id="@+id/input_examples"
             style="@style/inputs"
@@ -125,6 +144,8 @@
             android:inputType="textMultiLine"
             android:maxLines="5"
             android:layout_marginBottom="48dp"/>
+
+        </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
 </ScrollView>

@@ -21,4 +21,7 @@
 
     <!-- ProgresBar Color -->
     <color name="colorProgresBar">#3affc1</color>
+
+    <!-- SnackBarText Color -->
+    <color name="colorSnackBarText">#ef4d55</color>
 </resources>

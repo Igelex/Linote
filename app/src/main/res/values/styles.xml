@@ -6,13 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionBarStyle">@style/appbar_elevation</item>
 
-    </style>
-
-    <style name="appbar_elevation" parent="style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <!-- Remove the shadow below the app bar -->
-        <item name="elevation">0dp</item>
     </style>
 
     <!-- Theme of the editor -->
@@ -28,6 +22,12 @@
         <item name="colorPrimaryDark">@color/colorEditorPrimaryDark</item>
         <item name="colorAccent">@color/colorEditorAccent</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="actionBarStyle">@style/appbar_elevation</item>
+    </style>
+
+    <style name="appbar_elevation" parent="style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <!-- Remove the shadow below the app bar -->
+        <item name="elevation">0dp</item>
     </style>
 
 
@@ -58,7 +58,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <!-- Card Menu Bar Style. -->
+    <!-- Card Menu-Bar Style. -->
     <style name="card_menu_bar">
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:background">?attr/selectableItemBackground</item>

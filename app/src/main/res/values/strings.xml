@@ -29,7 +29,7 @@
 
     <!-- Parts of Speech Strings for Spinner -->
     <string name="chose_pos">Part of Speech</string>
-    <string name="noun">Noun</string>
+    <string name="noun">noun</string>
     <string name="pronoun">pronoun</string>
     <string name="verb">verb</string>
     <string name="adverb">adverb</string>
@@ -106,6 +106,8 @@
     <string name="spinnerpos_input_error_msg">Please chose a Part of speech</string>
     <string name="spinnerlang_input_error_msg">Please chose a Language</string>
     <string name="spinnerarticle_input_error_msg">Please chose an Article</string>
+    <string name="no_intenet_connection_msg">No internet connection</string>
+    <string name="reload_menu_item">reload</string>
 
 
 </resources>

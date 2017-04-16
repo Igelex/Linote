@@ -6,7 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -157,7 +161,7 @@ public class LinoteCursorAdapter extends CursorAdapter {
             public void onClick(View view) {
                 popup = new PopupMenu(context, menuButton);
                 popup.inflate(R.menu.card_bar_menu);
-                setCustomPopupListener(wordWebUri, tr, intentString);
+                setCustomPopupListener(wordWebUri, tr, intentString, view);
                 popup.show();
             }
         });
@@ -186,28 +190,44 @@ public class LinoteCursorAdapter extends CursorAdapter {
         alertDialog.show();
     }
 
-    private void setCustomPopupListener(final String wordWebUri, final String translationDirection, final String intentString) {
+    private void setCustomPopupListener(final String wordWebUri, final String translationDirection, final String intentString, final View view) {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             Intent intent;
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.menu_item_abby:
-                        Uri abbyUri = Uri.parse("https://www.lingvolive.com/en-us/translate/" + translationDirection
-                                + "/" + wordWebUri);
-                        intent = new Intent(mContext, WebActivity.class);
-                        intent.setData(abbyUri);
-                        intent.putExtra("title", intentString);
-                        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
-                            mContext.startActivity(intent);
+                        if (isOnline()) {
+                            Uri abbyUri = Uri.parse("https://www.lingvolive.com/en-us/translate/" + translationDirection
+                                    + "/" + wordWebUri);
+                            intent = new Intent(mContext, WebActivity.class);
+                            intent.setData(abbyUri);
+                            intent.putExtra("title", intentString);
+                            if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                                mContext.startActivity(intent);
+                            }
+                        }else {
+                            Snackbar snackbar = Snackbar.make(view, mContext.getString(R.string.no_intenet_connection_msg), Snackbar.LENGTH_LONG);
+                            View snackbarView = snackbar.getView();
+                            TextView snackBarText = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                            snackBarText.setTextColor(Color.RED);
+                            snackbar.show();
                         }
                         break;
                     case R.id.menu_item_google:
-                        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-                        intent.putExtra(SearchManager.QUERY, wordWebUri);
-                        mContext.startActivity(intent);
-                        if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                        if(isOnline()) {
+                            Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                            intent.putExtra(SearchManager.QUERY, wordWebUri);
                             mContext.startActivity(intent);
+                            if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                                mContext.startActivity(intent);
+                            }
+                        }else {
+                            Snackbar snackbar = Snackbar.make(view, mContext.getString(R.string.no_intenet_connection_msg), Snackbar.LENGTH_LONG);
+                            View snackbarView = snackbar.getView();
+                            TextView snackBarText = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                            snackBarText.setTextColor(Color.RED);
+                            snackbar.show();
                         }
                         break;
 
@@ -218,6 +238,13 @@ public class LinoteCursorAdapter extends CursorAdapter {
 
         });
 
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
 }

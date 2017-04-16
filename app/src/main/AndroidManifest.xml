@@ -3,6 +3,7 @@
     package="com.example.android.linote">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -46,7 +47,7 @@
 
         <activity android:name=".WebActivity"
             android:parentActivityName=".WordDetails"
-            android:theme="@style/EditorTheme">
+            android:theme="@style/WebActivityTheme">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

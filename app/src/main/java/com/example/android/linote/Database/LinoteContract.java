@@ -36,9 +36,9 @@ public final class LinoteContract {
         Possible Values for the Article
          */
         public static final int ARTICLE_NO_ARTICLE_SELECTED = 0;
-        public static final int ARTICLE_DER= 1;
-        public static final int ARTICLE_DIE= 1;
-        public static final int ARTICLE_DAS= 1;
+        public static final int ARTICLE_DER = 1;
+        public static final int ARTICLE_DIE = 2;
+        public static final int ARTICLE_DAS = 3;
 
 
         /*

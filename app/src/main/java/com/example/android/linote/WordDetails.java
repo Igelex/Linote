@@ -2,11 +2,16 @@ package com.example.android.linote;
 
 import android.app.LoaderManager;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,15 +58,22 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
         abbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Uri abbyUri = Uri.parse("https://www.lingvolive.com/en-us/translate/" + translationDirection
-                        + "/" + wordWebUri);
-                Intent intent = new Intent(WordDetails.this, WebActivity.class);
-                intent.setData(abbyUri);
-                intent.putExtra("title", wordWebUri);
-                intent.putExtra("backUri", mCurrentUri.toString());
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(intent, 1);
+                if(isOnline()) {
+                    Uri abbyUri = Uri.parse("https://www.lingvolive.com/en-us/translate/" + translationDirection
+                            + "/" + wordWebUri);
+                    Intent intent = new Intent(WordDetails.this, WebActivity.class);
+                    intent.setData(abbyUri);
+                    intent.putExtra("title", wordWebUri);
+                    intent.putExtra("backUri", mCurrentUri.toString());
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, 1);
+                    }
+                }else {
+                    Snackbar snackbar = Snackbar.make(view, getString(R.string.no_intenet_connection_msg), Snackbar.LENGTH_LONG);
+                    View snackbarView = snackbar.getView();
+                    TextView snackBarText = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    snackBarText.setTextColor(Color.RED);
+                    snackbar.show();
                 }
             }
         });
@@ -69,14 +81,32 @@ public class WordDetails extends AppCompatActivity implements LoaderManager.Load
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-                intent.putExtra(SearchManager.QUERY, wordWebUri.toLowerCase()); // query contains search string
-                startActivity(intent);
-                if (intent.resolveActivity(getPackageManager()) != null) {
+                if(isOnline()) {
+                    Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                    intent.putExtra(SearchManager.QUERY, wordWebUri.toLowerCase()); // query contains search string
                     startActivity(intent);
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(intent);
+                    }
+                }else {
+                    Snackbar snackbar = Snackbar.make(view, getString(R.string.no_intenet_connection_msg), Snackbar.LENGTH_LONG);
+                    View snackbarView = snackbar.getView();
+                    TextView snackBarText = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    snackBarText.setTextColor(Color.RED);
+                    snackbar.show();
                 }
             }
         });
+    }
+    /*
+    Check internet connection
+     */
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     @Override
