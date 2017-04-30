@@ -37,7 +37,7 @@ public class WebActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Uri mCurrentUri = getIntent().getData();
-        if(intent.hasExtra("backUri")) {
+        if (intent.hasExtra("backUri")) {
             mBackUri = Uri.parse(intent.getStringExtra("backUri"));
         }
 
@@ -54,12 +54,7 @@ public class WebActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         setTitle(bundle.getString("title"));
 
-        loadProgress();
 
-        myWebView.loadUrl(mCurrentUri.toString());
-    }
-
-    public void loadProgress(){
         myWebView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 progressBar.setProgress(progress * 1);
@@ -69,6 +64,9 @@ public class WebActivity extends AppCompatActivity {
                 }
             }
         });
+
+        myWebView.loadUrl(mCurrentUri.toString());
+
     }
 
     @Override
@@ -81,7 +79,7 @@ public class WebActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (mBackUri != null){
+                if (mBackUri != null) {
                     Intent backIntent = new Intent(this, WordDetails.class);
                     backIntent.setData(mBackUri);
                     startActivity(backIntent);
